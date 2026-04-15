@@ -130,11 +130,66 @@
 
         .memorial-candle { margin-top: auto; align-self: center; width: 60px; display: block; }
 
+        /* ===================== МОБІЛЬНИЙ РЕЖИМ ===================== */
         @media (max-width: 950px) {
-            :root { --page-width: 90vw; --page-height: 80vh; }
-            .book-viewport { width: var(--page-width); }
-            .book-viewport.at-start, .book-viewport.at-end { transform: translateX(0); }
-            .page { width: 100%; right: 0; }
+            :root {
+                --page-width: 95vw;
+                --page-height: 85vh;
+            }
+
+            .header-title {
+                width: 95vw;
+                font-size: 1.2rem;
+            }
+
+            .book-viewport {
+                width: var(--page-width);
+                height: var(--page-height);
+                transform: none !important;
+            }
+
+            .book {
+                width: 100%;
+                height: 100%;
+            }
+
+            /* На мобільному всі сторінки ховаємо за замовчуванням */
+            .page {
+                width: 100%;
+                left: 0;
+                right: 0;
+                transform: none !important;
+                transform-style: flat;
+                display: none;
+                cursor: default;
+            }
+
+            /* Активна сторінка видима */
+            .page.mobile-active {
+                display: block;
+            }
+
+            .front, .back {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                transform: none !important;
+                backface-visibility: visible;
+                border-radius: 8px;
+            }
+
+            /* Ховаємо панелі які не потрібні */
+            .page.mobile-active .front.mobile-hidden,
+            .page.mobile-active .back.mobile-hidden {
+                display: none;
+            }
+
+            .hero-photo-frame {
+                width: 200px;
+                height: 260px;
+            }
         }
     </style>
 </head>
@@ -157,42 +212,25 @@
     <script>
         // ДАНІ ГЕРОЇВ - додавайте нових героїв за цим зразком
         const heroes = [
-{
+            {
                 name: "Святозар Чопей",
                 birth: "25.02.1989",
                 death: "01.04.2026",
                 rank: "Захисник України",
                 unit: "46-та окрема аеромобільна Подільська бригада ДШВ ЗСУ",
-                photo: "assets/hero1.svg", 
+                photo: "assets/hero1.svg",
                 bio: "Випускник ВСП «Фаховий коледж інфокомунікацій НУ «Львівська політехніка». Був учасником АТО та ООС. З початком повномасштабного вторгнення став на захист Батьківщини. Боронив територіальну цілісність на Луганському та Запорізькому напрямках. Загинув під час виконання бойового завдання. Педагогічний колектив та студентська спільнота висловлюють щирі співчуття рідним. Світла пам'ять Герою!"
             },
             {
-                                name: "Прізвище Ім'я По батькові",
-                birth: "ХХ.ХХ.ХХХХ",
-                death: "ХХ.ХХ.ХХХХ",
-                rank: "Звання",
-                unit: "Підрозділ",
-                photo: "assets/hero2.svg", 
-                bio: "Біографія героя"
-            },
-                        {
                 name: "Прізвище Ім'я По батькові",
                 birth: "ХХ.ХХ.ХХХХ",
                 death: "ХХ.ХХ.ХХХХ",
                 rank: "Звання",
                 unit: "Підрозділ",
-                photo: "assets/hero3.svg", 
-                bio: "Біографія героя"
-            },
-            {
-                name: "Прізвище Ім'я По батькові",
-                birth: "ХХ.ХХ.ХХХХ",
-                death: "ХХ.ХХ.ХХХХ",
-                rank: "Звання",
-                unit: "Підрозділ",
-                photo: "assets/hero4.svg", 
+                photo: "assets/hero2.svg",
                 bio: "Біографія героя"
             }
+
         ];
 
         const bookContainer = document.getElementById('bookContainer');
@@ -214,12 +252,10 @@
                 </div>
             `;
 
-            // Додаємо першого героя з цитатою
             if (heroes.length > 0) {
                 const firstHero = heroes[0];
                 const zIndex = heroes.length * 2;
                 html += `
-                    <!-- ПЕРШИЙ ГЕРОЙ: ЦИТАТА ТА ПРОФІЛЬ -->
                     <div class="page" style="z-index: ${zIndex}">
                         <div class="front">
                             <div style="height:100%; display:flex; align-items:center; justify-content:center; padding: 40px; font-style: italic; color: #555; text-align: center;">
@@ -245,11 +281,9 @@
                 `;
             }
 
-            // ОСНОВНИЙ ЦИКЛ: для кожного героя додаємо його біографію + профіль наступного героя (або обкладинку)
             heroes.forEach((hero, index) => {
                 const zIndex = (heroes.length - index) * 2 - (index === 0 ? 1 : 0);
                 html += `
-                    <!-- ГЕРОЙ ${index + 1}: БІОГРАФІЯ + ${index < heroes.length - 1 ? 'ГЕРОЙ ' + (index + 2) : 'ОБКЛАДИНКА'} -->
                     <div class="page" style="z-index: ${zIndex}">
                         <div class="front">
                             <h2 class="page-title">Біографія</h2>
@@ -285,43 +319,133 @@
         let currentLoc = 0;
         let totalPages = pages.length;
 
+        // Мобільний: 0 = front, 1 = back поточної сторінки
+        let mobileSubPage = 0;
+
+        function isMobile() {
+            return window.innerWidth <= 950;
+        }
+
         function updateUI() {
-            const isMobile = window.innerWidth <= 950;
-            if (!isMobile) {
+            const mobile = isMobile();
+
+            if (!mobile) {
+                // ===== ДЕСКТОП: оригінальна логіка =====
+                pages.forEach(page => {
+                    page.classList.remove('mobile-active');
+                    page.style.display = '';
+                    const front = page.querySelector('.front');
+                    const back = page.querySelector('.back');
+                    if (front) { front.classList.remove('mobile-hidden'); front.style.display = ''; }
+                    if (back)  { back.classList.remove('mobile-hidden');  back.style.display = ''; }
+                });
+
                 viewport.classList.remove('at-start', 'at-end');
                 if (currentLoc === 0) viewport.classList.add('at-start');
                 else if (currentLoc === totalPages) viewport.classList.add('at-end');
-            }
-            prevBtn.disabled = (currentLoc === 0);
-            nextBtn.disabled = (currentLoc === totalPages);
-            
-            // Оновлення лічильника (відображаємо номер розвороту)
-            counter.innerText = `${Math.ceil((currentLoc + 1) / 2)} / ${Math.ceil((totalPages + 1) / 2)}`;
 
-            pages.forEach((page, index) => {
-                page.style.zIndex = (index < currentLoc) ? index + 1 : totalPages - index + 1;
-            });
+                prevBtn.disabled = (currentLoc === 0);
+                nextBtn.disabled = (currentLoc === totalPages);
+
+                counter.innerText = `${Math.ceil((currentLoc + 1) / 2)} / ${Math.ceil((totalPages + 1) / 2)}`;
+
+                pages.forEach((page, index) => {
+                    page.style.zIndex = (index < currentLoc)
+                        ? index + 1
+                        : totalPages - index + 1;
+                });
+
+            } else {
+                // ===== МОБІЛЬНИЙ: одна панель за раз =====
+                // Ховаємо всі сторінки
+                pages.forEach(page => {
+                    page.classList.remove('mobile-active');
+                });
+
+                // Показуємо тільки поточну
+                const currentPage = pages[currentLoc];
+                if (currentPage) {
+                    currentPage.classList.add('mobile-active');
+
+                    const front = currentPage.querySelector('.front');
+                    const back  = currentPage.querySelector('.back');
+
+                    if (mobileSubPage === 0) {
+                        // Показуємо front, ховаємо back
+                        if (front) { front.classList.remove('mobile-hidden'); }
+                        if (back)  { back.classList.add('mobile-hidden'); }
+                    } else {
+                        // Показуємо back, ховаємо front
+                        if (front) { front.classList.add('mobile-hidden'); }
+                        if (back)  { back.classList.remove('mobile-hidden'); }
+                    }
+                }
+
+                // Лічильник
+                const totalScreens = totalPages * 2;
+                const currentScreen = currentLoc * 2 + mobileSubPage + 1;
+                counter.innerText = `${currentScreen} / ${totalScreens}`;
+
+                const isFirst = (currentLoc === 0 && mobileSubPage === 0);
+                const isLast  = (currentLoc === totalPages - 1 && mobileSubPage === 1);
+                prevBtn.disabled = isFirst;
+                nextBtn.disabled = isLast;
+            }
         }
 
         nextBtn.addEventListener('click', () => {
-            if (currentLoc < totalPages) {
-                pages[currentLoc].classList.add('flipped');
-                currentLoc++;
-                updateUI();
+            if (isMobile()) {
+                if (mobileSubPage === 0) {
+                    mobileSubPage = 1;
+                } else {
+                    if (currentLoc < totalPages - 1) {
+                        currentLoc++;
+                        mobileSubPage = 0;
+                    }
+                }
+            } else {
+                if (currentLoc < totalPages) {
+                    pages[currentLoc].classList.add('flipped');
+                    currentLoc++;
+                }
             }
+            updateUI();
         });
 
         prevBtn.addEventListener('click', () => {
-            if (currentLoc > 0) {
-                currentLoc--;
-                pages[currentLoc].classList.remove('flipped');
-                updateUI();
+            if (isMobile()) {
+                if (mobileSubPage === 1) {
+                    mobileSubPage = 0;
+                } else {
+                    if (currentLoc > 0) {
+                        currentLoc--;
+                        mobileSubPage = 1;
+                    }
+                }
+            } else {
+                if (currentLoc > 0) {
+                    currentLoc--;
+                    pages[currentLoc].classList.remove('flipped');
+                }
             }
+            updateUI();
         });
 
-        window.addEventListener('resize', updateUI);
+        // При зміні розміру вікна — скидаємо мобільний стан і перераховуємо
+        let lastMobile = isMobile();
+        window.addEventListener('resize', () => {
+            const nowMobile = isMobile();
+            if (nowMobile !== lastMobile) {
+                // При переключенні режиму скидаємо позицію
+                currentLoc = 0;
+                mobileSubPage = 0;
+                pages.forEach(page => page.classList.remove('flipped'));
+                lastMobile = nowMobile;
+            }
+            updateUI();
+        });
+
         updateUI();
-        
     </script>
 </body>
 </html>
