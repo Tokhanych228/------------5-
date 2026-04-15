@@ -20,31 +20,123 @@
 
         body {
             margin: 0;
-            padding: 10px;
-            min-height: 100vh;
-            background: #f4f4f4;
+            padding: 0;
+            background: #ffffff;
+            font-family: 'Times New Roman', serif;
+            overflow-x: hidden;
+        }
+
+        /* ===================== ГОЛОВНИЙ ЕКРАН (ЛЕНДІНГ) ===================== */
+        .landing-section {
+            width: 100%;
+            min-height: 90vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            font-family: 'Times New Roman', serif;
-            perspective: 2500px;
-            overflow-x: hidden;
+            padding: 40px 20px;
+            background: #fdfdfd;
         }
 
-        .header-title {
-            color: var(--accent-blue);
-            margin-bottom: 25px;
-            text-align: left;
-            text-transform: uppercase;
-            font-size: 1.6rem;
-            font-weight: 900;
-            letter-spacing: 1px;
-            width: calc(var(--page-width) * 2);
-            max-width: 95vw;
-            border-bottom: 3px solid var(--gold);
-            padding-bottom: 10px;
+        .landing-container {
+            max-width: 1100px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            z-index: 2;
         }
+
+        .landing-content {
+            flex: 1.2;
+        }
+
+        .landing-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            font-weight: 900;
+            color: var(--accent-blue);
+        }
+
+        .landing-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 35px;
+            max-width: 550px;
+        }
+
+        .read-more-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 30px;
+            border: 1px solid #ccc;
+            background: #fff;
+            color: #333;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .read-more-btn:hover {
+            background: var(--accent-blue);
+            color: #fff;
+            border-color: var(--accent-blue);
+        }
+
+        .landing-visual {
+            flex: 0.8;
+            display: flex;
+            justify-content: center;
+        }
+
+        .landing-book-img {
+            width: 100%;
+            max-width: 450px;
+            height: auto;
+            border-radius: 4px;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.05));
+        }
+
+        .pagination-dots {
+            margin-top: 50px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .dot.active { 
+            background: var(--accent-blue); 
+            box-shadow: 0 0 8px rgba(0, 87, 183, 0.5);
+            transform: scale(1.2);
+        }
+
+        /* ===================== СЕКЦІЯ КНИГИ ===================== */
+        .book-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 20px 10px 80px 10px;
+            background: #fff;
+            perspective: 2500px;
+        }
+
+        /* Заголовок прибрано за вашим запитом */
 
         .book-viewport {
             position: relative;
@@ -90,23 +182,22 @@
             border: 1px solid #ddd;
             display: flex;
             flex-direction: column;
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.03), 10px 0 20px rgba(0,0,0,0.1);
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.02), 10px 0 20px rgba(0,0,0,0.03);
         }
 
         .back { border-radius: 8px 0 0 8px; transform: rotateY(180deg); }
         .front { border-radius: 0 8px 8px 0; }
 
-        .cover-front { background-image: url('assets/cover.png'); background-size: cover; background-position: center; border: none; padding: 0; }
-        .cover-back { background-image: url('assets/end.png'); background-size: cover; background-position: center; border: none; padding: 0; }
+        .cover-front { background: #fff; border: 1px solid #eee; padding: 0; }
+        .cover-back { background: #fff; border: 1px solid #eee; padding: 0; }
 
         .hero-profile { display: flex; flex-direction: column; align-items: center; text-align: center; height: 100%; }
         .hero-photo-frame {
-            width: 260px; height: 340px; border: 1px solid #ccc; padding: 8px; background: #f0f0f0;
-            margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); display: flex; align-items: center;
+            width: 260px; height: 340px; border: 1px solid #eee; padding: 0; background: #fafafa;
+            margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; align-items: center;
             justify-content: center; overflow: hidden; position: relative;
         }
         .hero-photo { width: 100%; height: 100%; background-size: cover; background-position: center; z-index: 2; }
-        .photo-placeholder { position: absolute; width: 60px; height: 60px; opacity: 0.2; z-index: 1; }
 
         .hero-name-label {
             font-size: 1.3rem; font-weight: 800; color: #000; text-transform: uppercase;
@@ -115,14 +206,14 @@
         }
 
         .info-group { width: 100%; margin-top: 5px; }
-        .info-item { margin-bottom: 12px; border-bottom: 1px dotted #ccc; padding-bottom: 4px; }
+        .info-item { margin-bottom: 12px; border-bottom: 1px dotted #ccc; padding-bottom: 4px; text-align: left;}
         .info-label { color: var(--accent-blue); font-weight: bold; font-size: 0.8rem; text-transform: uppercase; display: block; }
         .info-value { font-size: 1rem; color: #111; }
 
         .page-title { color: var(--accent-blue); border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-top: 0; text-transform: uppercase; font-size: 1.5rem; }
         .bio-text { font-size: 0.95rem; line-height: 1.6; text-align: justify; color: #333; }
 
-        .controls { margin-top: 40px; display: flex; gap: 12px; align-items: center; z-index: 100; }
+        .controls { margin-top: 40px; display: flex; gap: 12px; align-items: center; }
         .nav-btn { padding: 12px 30px; border: none; cursor: pointer; font-weight: bold; color: white; text-transform: uppercase; font-size: 0.8rem; transition: 0.3s; }
         #prevBtn { background: #c2c2c2; border-radius: 20px 5px 5px 20px; }
         #nextBtn { background: var(--accent-blue); border-radius: 5px 20px 20px 5px; }
@@ -131,76 +222,81 @@
 
         .memorial-candle { margin-top: auto; align-self: center; width: 60px; display: block; }
 
-        /* ===================== МОБІЛЬНИЙ РЕЖИМ ===================== */
+        /* ===================== МОБІЛЬНА АДАПТАЦІЯ ===================== */
         @media (max-width: 950px) {
+            .landing-container { flex-direction: column; text-align: center; }
+            .landing-visual { order: -1; margin-bottom: 20px; }
+            
             :root {
                 --page-width: 95vw;
                 --page-height: 75vh;
             }
-
-            .header-title {
-                width: 95vw;
-                font-size: 1.1rem;
+            
+            .book-viewport { width: var(--page-width); transform: none !important; }
+            .page { width: 100%; left: 0; right: 0; transform: none !important; display: none; }
+            .page.mobile-active { display: block; }
+            
+            .front, .back { 
+                position: absolute; 
+                width: 100%; 
+                height: 100%; 
+                top: 0; 
+                left: 0; 
+                transform: none !important; 
+                backface-visibility: visible; 
+                border-radius: 8px; 
+                padding: 25px; 
             }
 
-            .book-viewport {
-                width: var(--page-width);
-                height: var(--page-height);
-                transform: none !important;
-            }
-
-            .page {
-                width: 100%;
-                left: 0;
-                right: 0;
-                transform: none !important;
-                transform-style: flat;
-                display: none;
-            }
-
-            .page.mobile-active {
-                display: block;
-            }
-
-            .front, .back {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                top: 0;
-                left: 0;
-                transform: none !important;
-                backface-visibility: visible;
-                border-radius: 8px;
-                padding: 25px;
+            /* ВИПРАВЛЕННЯ БАГУ З ЛІНІЯМИ НА ОБКЛАДИНЦІ */
+            .cover-front, .cover-back {
+                border: none !important; /* Прибираємо рамку */
+                padding: 0 !important;   /* Прибираємо внутрішній відступ */
+                box-shadow: none !important; /* Прибираємо тінь, якщо вона створює контур */
+                background: transparent !important;
             }
 
             .page.mobile-active .front.mobile-hidden,
-            .page.mobile-active .back.mobile-hidden {
-                display: none;
-            }
-
-            .hero-photo-frame {
-                width: 180px;
-                height: 240px;
-            }
+            .page.mobile-active .back.mobile-hidden { display: none; }
+            .hero-photo-frame { width: 180px; height: 240px; }
         }
     </style>
 </head>
 <body>
 
-    <h1 class="header-title">Книга пам'яті Героїв України</h1>
-
-    <div class="book-viewport at-start" id="viewport">
-        <div class="book" id="bookContainer">
-            <!-- Сторінки генеруються скриптом -->
+    <section class="landing-section">
+        <div class="landing-container">
+            <div class="landing-content">
+                <h1 class="landing-title">Книга пам'яті <br>Героїв України</h1>
+                <p class="landing-description">
+                    Це живий літопис мужності та самопожертви. Ми зберігаємо імена тих, хто віддав своє життя за нашу незалежність, щоб кожна історія продовжувала жити в пам'яті народу.
+                </p>
+                <button class="read-more-btn" onclick="document.getElementById('book-start').scrollIntoView({behavior: 'smooth'})">
+                    Відкрити книгу →
+                </button>
+            </div>
+            <div class="landing-visual">
+                <img src="assets/book block.png" alt="Головне фото" class="landing-book-img">
+            </div>
         </div>
-    </div>
+        <div class="pagination-dots">
+            <div class="dot active"></div>
+            <div class="dot "></div>
+            <div class="dot"></div>
+        </div>
+    </section>
 
-    <div class="controls">
-        <button id="prevBtn" class="nav-btn">← Назад</button>
-        <span class="page-counter" id="counter">1 / 1</span>
-        <button id="nextBtn" class="nav-btn">Вперед →</button>
-    </div>
+    <section class="book-section" id="book-start">
+        <div class="book-viewport at-start" id="viewport">
+            <div class="book" id="bookContainer"></div>
+        </div>
+
+        <div class="controls">
+            <button id="prevBtn" class="nav-btn">← Назад</button>
+            <span class="page-counter" id="counter">1 / 1</span>
+            <button id="nextBtn" class="nav-btn">Вперед →</button>
+        </div>
+    </section>
 
     <script>
         const heroes = [
@@ -211,16 +307,16 @@
                 rank: "Захисник України",
                 unit: "46-та окрема аеромобільна Подільська бригада ДШВ ЗСУ",
                 photo: "assets/hero1.svg", 
-                bio: "Випускник ВСП «Фаховий коледж інфокомунікацій НУ «Львівська політехніка». Був учасником АТО та ООС. З початком повномасштабного вторгнення став на захист Батьківщини. Боронив територіальну цілісність на Луганському та Запорізькому напрямках. Загинув під час виконання бойового завдання. Педагогічний колектив та студентська спільнота висловлюють щирі співчуття рідним. Світла пам'ять Герою!"
+                bio: "Випускник ВСП «Фаховий коледж інфокомунікацій НУ «Львівська політехніка». Був учасником АТО та ООС. З початком повномасштабного вторгнення став на захист Батьківщини. Боронив територіальну цілісність на Луганському та Запорізькому напрямках. Світла пам'ять Герою!"
             },
             {
-                                name: "Прізвище Ім'я По батькові",
-                birth: "ХХ.ХХ.ХХХХ",
-                death: "ХХ.ХХ.ХХХХ",
-                rank: "Звання",
-                unit: "Підрозділ",
+                name: "Олександр Козак",
+                birth: "10.03.1995",
+                death: "15.08.2023",
+                rank: "Молодший сержант",
+                unit: "Збройні Сили України",
                 photo: "assets/hero2.svg", 
-                bio: "Біографія героя"
+                bio: "Захищав суверенітет України з перших днів вторгнення. Приклад мужності та самопожертви для майбутніх поколінь."
             }
         ];
 
@@ -233,7 +329,9 @@
         function initBook() {
             let html = `
                 <div class="page" style="z-index: ${heroes.length * 2 + 10}">
-                    <div class="front cover-front"></div>
+                    <div class="front cover-front">
+                        <img src="assets/cover.svg" alt="Обкладинка" style="width:100%; height:100%; object-fit: cover; border-radius: 8px;">
+                    </div>
                     <div class="back">
                         <h2 class="page-title">Передмова</h2>
                         <p class="bio-text">Ця книга — живий літопис мужності. Вона зберігає імена тих, хто став щитом для України. Кожна сторінка — це ціле життя, віддане за наш мир і свободу. Ми пам'ятаємо кожного.</p>
@@ -255,7 +353,6 @@
                         <div class="back">
                             <div class="hero-profile">
                                 <div class="hero-photo-frame">
-                                    <svg class="photo-placeholder" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
                                     <div class="hero-photo" style="background-image: url('${firstHero.photo}')"></div>
                                 </div>
                                 <div class="hero-name-label">${firstHero.name}</div>
@@ -283,7 +380,6 @@
                             ${index < heroes.length - 1 ? `
                                 <div class="hero-profile">
                                     <div class="hero-photo-frame">
-                                        <svg class="photo-placeholder" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
                                         <div class="hero-photo" style="background-image: url('${heroes[index + 1].photo}')"></div>
                                     </div>
                                     <div class="hero-name-label">${heroes[index + 1].name}</div>
@@ -294,7 +390,9 @@
                                         <div class="info-item"><span class="info-label">Підрозділ</span><span class="info-value">${heroes[index + 1].unit}</span></div>
                                     </div>
                                 </div>
-                            ` : ''}
+                            ` : `
+                                <img src="assets/end.svg" alt="Задня обкладинка" style="width:100%; height:100%; object-fit: cover; border-radius: 8px;">
+                            `}
                         </div>
                     </div>
                 `;
@@ -302,7 +400,6 @@
 
             bookContainer.innerHTML = html;
         }
-
         initBook();
 
         const pages = document.querySelectorAll('.page');
@@ -310,159 +407,94 @@
         let totalPages = pages.length;
         let mobileSubPage = 0;
 
-        function isMobile() {
-            return window.innerWidth <= 950;
-        }
+        function isMobile() { return window.innerWidth <= 950; }
 
         function goNext() {
             if (isMobile()) {
-                if (mobileSubPage === 0) {
-                    mobileSubPage = 1;
-                } else {
-                    if (currentLoc < totalPages - 1) {
-                        currentLoc++;
-                        mobileSubPage = 0;
-                    }
-                }
+                if (mobileSubPage === 0) mobileSubPage = 1;
+                else if (currentLoc < totalPages - 1) { currentLoc++; mobileSubPage = 0; }
             } else {
-                if (currentLoc < totalPages) {
-                    pages[currentLoc].classList.add('flipped');
-                    currentLoc++;
-                }
+                if (currentLoc < totalPages) { pages[currentLoc].classList.add('flipped'); currentLoc++; }
             }
             updateUI();
         }
 
         function goPrev() {
             if (isMobile()) {
-                if (mobileSubPage === 1) {
-                    mobileSubPage = 0;
-                } else {
-                    if (currentLoc > 0) {
-                        currentLoc--;
-                        mobileSubPage = 1;
-                    }
-                }
+                if (mobileSubPage === 1) mobileSubPage = 0;
+                else if (currentLoc > 0) { currentLoc--; mobileSubPage = 1; }
             } else {
-                if (currentLoc > 0) {
-                    currentLoc--;
-                    pages[currentLoc].classList.remove('flipped');
-                }
+                if (currentLoc > 0) { currentLoc--; pages[currentLoc].classList.remove('flipped'); }
             }
             updateUI();
         }
 
-        // Централізований обробник кліків для мобільних
-        document.body.addEventListener('click', (e) => {
-            // Ігноруємо кліки по кнопках навігації
-            if (e.target.closest('.controls')) return;
-
-            if (isMobile()) {
-                const screenWidth = window.innerWidth;
-                const clickX = e.clientX;
-
-                if (clickX < screenWidth / 2) {
-                    // Клік по лівій половині - назад
-                    goPrev();
-                } else {
-                    // Клік по правій половині - вперед
-                    goNext();
-                }
-            }
-        });
-
-        // Окремий обробник для сторінок на ПК
-        pages.forEach((page) => {
-            page.addEventListener('click', (e) => {
-                if (isMobile()) return; // На мобільних працює глобальний обробник вище
-
-                if (page.classList.contains('flipped')) {
-                    goPrev();
-                } else {
-                    goNext();
-                }
-            });
-        });
-
         function updateUI() {
             const mobile = isMobile();
-
             if (!mobile) {
                 pages.forEach(page => {
                     page.classList.remove('mobile-active');
                     page.style.display = '';
                     const front = page.querySelector('.front');
                     const back = page.querySelector('.back');
-                    if (front) { front.classList.remove('mobile-hidden'); front.style.display = ''; }
-                    if (back)  { back.classList.remove('mobile-hidden');  back.style.display = ''; }
+                    if (front) front.classList.remove('mobile-hidden');
+                    if (back) back.classList.remove('mobile-hidden');
                 });
-
                 viewport.classList.remove('at-start', 'at-end');
                 if (currentLoc === 0) viewport.classList.add('at-start');
                 else if (currentLoc === totalPages) viewport.classList.add('at-end');
-
                 prevBtn.disabled = (currentLoc === 0);
                 nextBtn.disabled = (currentLoc === totalPages);
-
                 counter.innerText = `${Math.ceil((currentLoc + 1) / 2)} / ${Math.ceil((totalPages + 1) / 2)}`;
-
                 pages.forEach((page, index) => {
-                    page.style.zIndex = (index < currentLoc)
-                        ? index + 1
-                        : totalPages - index + 1;
+                    page.style.zIndex = (index < currentLoc) ? index + 1 : totalPages - index + 1;
                 });
-
             } else {
-                pages.forEach(page => {
-                    page.classList.remove('mobile-active');
-                });
-
+                pages.forEach(page => page.classList.remove('mobile-active'));
                 const currentPage = pages[currentLoc];
                 if (currentPage) {
                     currentPage.classList.add('mobile-active');
                     const front = currentPage.querySelector('.front');
-                    const back  = currentPage.querySelector('.back');
-
+                    const back = currentPage.querySelector('.back');
                     if (mobileSubPage === 0) {
-                        if (front) { front.classList.remove('mobile-hidden'); }
-                        if (back)  { back.classList.add('mobile-hidden'); }
+                        if (front) front.classList.remove('mobile-hidden');
+                        if (back) back.classList.add('mobile-hidden');
                     } else {
-                        if (front) { front.classList.add('mobile-hidden'); }
-                        if (back)  { back.classList.remove('mobile-hidden'); }
+                        if (front) front.classList.add('mobile-hidden');
+                        if (back) back.classList.remove('mobile-hidden');
                     }
                 }
-
-                const totalScreens = totalPages * 2;
-                const currentScreen = currentLoc * 2 + mobileSubPage + 1;
-                counter.innerText = `${currentScreen} / ${totalScreens}`;
-
-                const isFirst = (currentLoc === 0 && mobileSubPage === 0);
-                const isLast  = (currentLoc === totalPages - 1 && mobileSubPage === 1);
-                prevBtn.disabled = isFirst;
-                nextBtn.disabled = isLast;
+                counter.innerText = `${currentLoc * 2 + mobileSubPage + 1} / ${totalPages * 2}`;
+                prevBtn.disabled = (currentLoc === 0 && mobileSubPage === 0);
+                nextBtn.disabled = (currentLoc === totalPages - 1 && mobileSubPage === 1);
             }
         }
 
-        nextBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            goNext();
+        nextBtn.onclick = (e) => { e.stopPropagation(); goNext(); };
+        prevBtn.onclick = (e) => { e.stopPropagation(); goPrev(); };
+        window.onresize = updateUI;
+
+        const dots = document.querySelectorAll('.dot');
+        const sections = [
+            document.querySelector('.landing-section'), 
+            document.querySelector('.book-section')
+        ];
+
+        window.addEventListener('scroll', () => {
+            let currentSectionIndex = 0;
+            const scrollPos = window.scrollY + window.innerHeight / 2;
+            sections.forEach((section, idx) => {
+                if (section && scrollPos >= section.offsetTop) currentSectionIndex = idx;
+            });
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentSectionIndex);
+            });
         });
 
-        prevBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            goPrev();
-        });
-
-        let lastMobile = isMobile();
-        window.addEventListener('resize', () => {
-            const nowMobile = isMobile();
-            if (nowMobile !== lastMobile) {
-                currentLoc = 0;
-                mobileSubPage = 0;
-                pages.forEach(page => page.classList.remove('flipped'));
-                lastMobile = nowMobile;
-            }
-            updateUI();
+        dots.forEach((dot, idx) => {
+            dot.addEventListener('click', () => {
+                if (sections[idx]) sections[idx].scrollIntoView({ behavior: 'smooth' });
+            });
         });
 
         updateUI();
