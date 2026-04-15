@@ -135,6 +135,16 @@
             .book-viewport { width: var(--page-width); }
             .book-viewport.at-start, .book-viewport.at-end { transform: translateX(0); }
             .page { width: 100%; right: 0; }
+            
+            /* Цей код виправляє баг: показує back сторінку, коли вона перегорнута */
+            .page.flipped .back {
+                visibility: visible;
+                z-index: 2;
+                transform: rotateY(180deg); /* Повертаємо, щоб текст не був дзеркальним */
+            }
+            .page.flipped .front {
+                visibility: hidden;
+            }
         }
     </style>
 </head>
@@ -285,21 +295,31 @@
         let currentLoc = 0;
         let totalPages = pages.length;
 
-        function updateUI() {
+function updateUI() {
             const isMobile = window.innerWidth <= 950;
             if (!isMobile) {
                 viewport.classList.remove('at-start', 'at-end');
                 if (currentLoc === 0) viewport.classList.add('at-start');
                 else if (currentLoc === totalPages) viewport.classList.add('at-end');
             }
+            
             prevBtn.disabled = (currentLoc === 0);
             nextBtn.disabled = (currentLoc === totalPages);
             
-            // Оновлення лічильника (відображаємо номер розвороту)
-            counter.innerText = `${Math.ceil((currentLoc + 1) / 2)} / ${Math.ceil((totalPages + 1) / 2)}`;
+            // На телефоні рахуємо кожну сторінку окремо, на ПК - розвороти
+            if (isMobile) {
+                counter.innerText = `${currentLoc + 1} / ${totalPages + 1}`;
+            } else {
+                counter.innerText = `${Math.ceil((currentLoc + 1) / 2)} / ${Math.ceil((totalPages + 1) / 2)}`;
+            }
 
             pages.forEach((page, index) => {
-                page.style.zIndex = (index < currentLoc) ? index + 1 : totalPages - index + 1;
+                // Правильне накладання сторінок
+                if (index < currentLoc) {
+                    page.style.zIndex = index + 1;
+                } else {
+                    page.style.zIndex = totalPages - index + 1;
+                }
             });
         }
 
