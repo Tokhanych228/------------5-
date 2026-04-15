@@ -136,8 +136,6 @@
             perspective: 2500px;
         }
 
-        /* Заголовок прибрано за вашим запитом */
-
         .book-viewport {
             position: relative;
             width: calc(var(--page-width) * 2);
@@ -248,11 +246,10 @@
                 padding: 25px; 
             }
 
-            /* ВИПРАВЛЕННЯ БАГУ З ЛІНІЯМИ НА ОБКЛАДИНЦІ */
             .cover-front, .cover-back {
-                border: none !important; /* Прибираємо рамку */
-                padding: 0 !important;   /* Прибираємо внутрішній відступ */
-                box-shadow: none !important; /* Прибираємо тінь, якщо вона створює контур */
+                border: none !important;
+                padding: 0 !important;
+                box-shadow: none !important;
                 background: transparent !important;
             }
 
@@ -276,7 +273,7 @@
                 </button>
             </div>
             <div class="landing-visual">
-                <img src="assets/book block.png" alt="Головне фото" class="landing-book-img">
+                <img src="assets/book block.svg" alt="Головне фото" class="landing-book-img">
             </div>
         </div>
         <div class="pagination-dots">
@@ -310,13 +307,13 @@
                 bio: "Випускник ВСП «Фаховий коледж інфокомунікацій НУ «Львівська політехніка». Був учасником АТО та ООС. З початком повномасштабного вторгнення став на захист Батьківщини. Боронив територіальну цілісність на Луганському та Запорізькому напрямках. Світла пам'ять Герою!"
             },
             {
-                name: "Олександр Козак",
-                birth: "10.03.1995",
-                death: "15.08.2023",
-                rank: "Молодший сержант",
-                unit: "Збройні Сили України",
+                                name: "Прізвище Ім'я По батькові",
+                birth: "ХХ.ХХ.ХХХХ",
+                death: "ХХ.ХХ.ХХХХ",
+                rank: "Звання",
+                unit: "Підрозділ",
                 photo: "assets/hero2.svg", 
-                bio: "Захищав суверенітет України з перших днів вторгнення. Приклад мужності та самопожертви для майбутніх поколінь."
+                bio: "Біографія героя"
             }
         ];
 
@@ -328,7 +325,7 @@
 
         function initBook() {
             let html = `
-                <div class="page" style="z-index: ${heroes.length * 2 + 10}">
+                <div class="page" onclick="handlePageClick(event, this, 0)" style="z-index: ${heroes.length * 2 + 10}">
                     <div class="front cover-front">
                         <img src="assets/cover.svg" alt="Обкладинка" style="width:100%; height:100%; object-fit: cover; border-radius: 8px;">
                     </div>
@@ -344,7 +341,7 @@
                 const firstHero = heroes[0];
                 const zIndex = heroes.length * 2;
                 html += `
-                    <div class="page" style="z-index: ${zIndex}">
+                    <div class="page" onclick="handlePageClick(event, this, 1)" style="z-index: ${zIndex}">
                         <div class="front">
                             <div style="height:100%; display:flex; align-items:center; justify-content:center; padding: 40px; font-style: italic; color: #555; text-align: center;">
                                 "Герої не вмирають, доки ми про них пам'ятаємо."
@@ -371,7 +368,7 @@
             heroes.forEach((hero, index) => {
                 const zIndex = (heroes.length - index) * 2 - (index === 0 ? 1 : 0);
                 html += `
-                    <div class="page" style="z-index: ${zIndex}" data-index="${index}">
+                    <div class="page" onclick="handlePageClick(event, this, ${index + 2})" style="z-index: ${zIndex}" data-index="${index}">
                         <div class="front">
                             <h2 class="page-title">Біографія</h2>
                             <div class="bio-text"><p>${hero.bio}</p></div>
@@ -400,6 +397,30 @@
 
             bookContainer.innerHTML = html;
         }
+
+        // Функція обробки кліку
+        window.handlePageClick = function(event, pageElement, pageIdx) {
+            const rect = pageElement.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const midPoint = rect.width / 2;
+
+            if (isMobile()) {
+                // На мобільних: ліворуч - назад, праворуч - вперед
+                if (clickX < midPoint) {
+                    goPrev();
+                } else {
+                    goNext();
+                }
+            } else {
+                // На ПК: якщо сторінка перегорнута - назад, якщо ні - вперед
+                if (pageElement.classList.contains('flipped')) {
+                    goPrev();
+                } else {
+                    goNext();
+                }
+            }
+        };
+
         initBook();
 
         const pages = document.querySelectorAll('.page');
