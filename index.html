@@ -29,6 +29,7 @@
             align-items: center;
             font-family: 'Times New Roman', serif;
             perspective: 2500px;
+            overflow-x: hidden;
         }
 
         .header-title {
@@ -121,7 +122,7 @@
         .page-title { color: var(--accent-blue); border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-top: 0; text-transform: uppercase; font-size: 1.5rem; }
         .bio-text { font-size: 0.95rem; line-height: 1.6; text-align: justify; color: #333; }
 
-        .controls { margin-top: 40px; display: flex; gap: 12px; align-items: center; }
+        .controls { margin-top: 40px; display: flex; gap: 12px; align-items: center; z-index: 100; }
         .nav-btn { padding: 12px 30px; border: none; cursor: pointer; font-weight: bold; color: white; text-transform: uppercase; font-size: 0.8rem; transition: 0.3s; }
         #prevBtn { background: #c2c2c2; border-radius: 20px 5px 5px 20px; }
         #nextBtn { background: var(--accent-blue); border-radius: 5px 20px 20px 5px; }
@@ -134,12 +135,12 @@
         @media (max-width: 950px) {
             :root {
                 --page-width: 95vw;
-                --page-height: 85vh;
+                --page-height: 75vh;
             }
 
             .header-title {
                 width: 95vw;
-                font-size: 1.2rem;
+                font-size: 1.1rem;
             }
 
             .book-viewport {
@@ -148,12 +149,6 @@
                 transform: none !important;
             }
 
-            .book {
-                width: 100%;
-                height: 100%;
-            }
-
-            /* На мобільному всі сторінки ховаємо за замовчуванням */
             .page {
                 width: 100%;
                 left: 0;
@@ -161,10 +156,8 @@
                 transform: none !important;
                 transform-style: flat;
                 display: none;
-                cursor: default;
             }
 
-            /* Активна сторінка видима */
             .page.mobile-active {
                 display: block;
             }
@@ -178,17 +171,17 @@
                 transform: none !important;
                 backface-visibility: visible;
                 border-radius: 8px;
+                padding: 25px;
             }
 
-            /* Ховаємо панелі які не потрібні */
             .page.mobile-active .front.mobile-hidden,
             .page.mobile-active .back.mobile-hidden {
                 display: none;
             }
 
             .hero-photo-frame {
-                width: 200px;
-                height: 260px;
+                width: 180px;
+                height: 240px;
             }
         }
     </style>
@@ -210,7 +203,6 @@
     </div>
 
     <script>
-        // ДАНІ ГЕРОЇВ - додавайте нових героїв за цим зразком
         const heroes = [
             {
                 name: "Святозар Чопей",
@@ -218,19 +210,18 @@
                 death: "01.04.2026",
                 rank: "Захисник України",
                 unit: "46-та окрема аеромобільна Подільська бригада ДШВ ЗСУ",
-                photo: "assets/hero1.svg",
+                photo: "assets/hero1.svg", 
                 bio: "Випускник ВСП «Фаховий коледж інфокомунікацій НУ «Львівська політехніка». Був учасником АТО та ООС. З початком повномасштабного вторгнення став на захист Батьківщини. Боронив територіальну цілісність на Луганському та Запорізькому напрямках. Загинув під час виконання бойового завдання. Педагогічний колектив та студентська спільнота висловлюють щирі співчуття рідним. Світла пам'ять Герою!"
             },
             {
-                name: "Прізвище Ім'я По батькові",
+                                name: "Прізвище Ім'я По батькові",
                 birth: "ХХ.ХХ.ХХХХ",
                 death: "ХХ.ХХ.ХХХХ",
                 rank: "Звання",
                 unit: "Підрозділ",
-                photo: "assets/hero2.svg",
+                photo: "assets/hero2.svg", 
                 bio: "Біографія героя"
             }
-
         ];
 
         const bookContainer = document.getElementById('bookContainer');
@@ -241,7 +232,6 @@
 
         function initBook() {
             let html = `
-                <!-- ПЕРША ПАРА: ОБКЛАДИНКА ТА ПЕРЕДМОВА -->
                 <div class="page" style="z-index: ${heroes.length * 2 + 10}">
                     <div class="front cover-front"></div>
                     <div class="back">
@@ -284,7 +274,7 @@
             heroes.forEach((hero, index) => {
                 const zIndex = (heroes.length - index) * 2 - (index === 0 ? 1 : 0);
                 html += `
-                    <div class="page" style="z-index: ${zIndex}">
+                    <div class="page" style="z-index: ${zIndex}" data-index="${index}">
                         <div class="front">
                             <h2 class="page-title">Біографія</h2>
                             <div class="bio-text"><p>${hero.bio}</p></div>
@@ -318,19 +308,86 @@
         const pages = document.querySelectorAll('.page');
         let currentLoc = 0;
         let totalPages = pages.length;
-
-        // Мобільний: 0 = front, 1 = back поточної сторінки
         let mobileSubPage = 0;
 
         function isMobile() {
             return window.innerWidth <= 950;
         }
 
+        function goNext() {
+            if (isMobile()) {
+                if (mobileSubPage === 0) {
+                    mobileSubPage = 1;
+                } else {
+                    if (currentLoc < totalPages - 1) {
+                        currentLoc++;
+                        mobileSubPage = 0;
+                    }
+                }
+            } else {
+                if (currentLoc < totalPages) {
+                    pages[currentLoc].classList.add('flipped');
+                    currentLoc++;
+                }
+            }
+            updateUI();
+        }
+
+        function goPrev() {
+            if (isMobile()) {
+                if (mobileSubPage === 1) {
+                    mobileSubPage = 0;
+                } else {
+                    if (currentLoc > 0) {
+                        currentLoc--;
+                        mobileSubPage = 1;
+                    }
+                }
+            } else {
+                if (currentLoc > 0) {
+                    currentLoc--;
+                    pages[currentLoc].classList.remove('flipped');
+                }
+            }
+            updateUI();
+        }
+
+        // Централізований обробник кліків для мобільних
+        document.body.addEventListener('click', (e) => {
+            // Ігноруємо кліки по кнопках навігації
+            if (e.target.closest('.controls')) return;
+
+            if (isMobile()) {
+                const screenWidth = window.innerWidth;
+                const clickX = e.clientX;
+
+                if (clickX < screenWidth / 2) {
+                    // Клік по лівій половині - назад
+                    goPrev();
+                } else {
+                    // Клік по правій половині - вперед
+                    goNext();
+                }
+            }
+        });
+
+        // Окремий обробник для сторінок на ПК
+        pages.forEach((page) => {
+            page.addEventListener('click', (e) => {
+                if (isMobile()) return; // На мобільних працює глобальний обробник вище
+
+                if (page.classList.contains('flipped')) {
+                    goPrev();
+                } else {
+                    goNext();
+                }
+            });
+        });
+
         function updateUI() {
             const mobile = isMobile();
 
             if (!mobile) {
-                // ===== ДЕСКТОП: оригінальна логіка =====
                 pages.forEach(page => {
                     page.classList.remove('mobile-active');
                     page.style.display = '';
@@ -356,32 +413,25 @@
                 });
 
             } else {
-                // ===== МОБІЛЬНИЙ: одна панель за раз =====
-                // Ховаємо всі сторінки
                 pages.forEach(page => {
                     page.classList.remove('mobile-active');
                 });
 
-                // Показуємо тільки поточну
                 const currentPage = pages[currentLoc];
                 if (currentPage) {
                     currentPage.classList.add('mobile-active');
-
                     const front = currentPage.querySelector('.front');
                     const back  = currentPage.querySelector('.back');
 
                     if (mobileSubPage === 0) {
-                        // Показуємо front, ховаємо back
                         if (front) { front.classList.remove('mobile-hidden'); }
                         if (back)  { back.classList.add('mobile-hidden'); }
                     } else {
-                        // Показуємо back, ховаємо front
                         if (front) { front.classList.add('mobile-hidden'); }
                         if (back)  { back.classList.remove('mobile-hidden'); }
                     }
                 }
 
-                // Лічильник
                 const totalScreens = totalPages * 2;
                 const currentScreen = currentLoc * 2 + mobileSubPage + 1;
                 counter.innerText = `${currentScreen} / ${totalScreens}`;
@@ -393,50 +443,20 @@
             }
         }
 
-        nextBtn.addEventListener('click', () => {
-            if (isMobile()) {
-                if (mobileSubPage === 0) {
-                    mobileSubPage = 1;
-                } else {
-                    if (currentLoc < totalPages - 1) {
-                        currentLoc++;
-                        mobileSubPage = 0;
-                    }
-                }
-            } else {
-                if (currentLoc < totalPages) {
-                    pages[currentLoc].classList.add('flipped');
-                    currentLoc++;
-                }
-            }
-            updateUI();
+        nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            goNext();
         });
 
-        prevBtn.addEventListener('click', () => {
-            if (isMobile()) {
-                if (mobileSubPage === 1) {
-                    mobileSubPage = 0;
-                } else {
-                    if (currentLoc > 0) {
-                        currentLoc--;
-                        mobileSubPage = 1;
-                    }
-                }
-            } else {
-                if (currentLoc > 0) {
-                    currentLoc--;
-                    pages[currentLoc].classList.remove('flipped');
-                }
-            }
-            updateUI();
+        prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            goPrev();
         });
 
-        // При зміні розміру вікна — скидаємо мобільний стан і перераховуємо
         let lastMobile = isMobile();
         window.addEventListener('resize', () => {
             const nowMobile = isMobile();
             if (nowMobile !== lastMobile) {
-                // При переключенні режиму скидаємо позицію
                 currentLoc = 0;
                 mobileSubPage = 0;
                 pages.forEach(page => page.classList.remove('flipped'));
