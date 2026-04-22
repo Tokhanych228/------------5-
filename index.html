@@ -52,6 +52,26 @@
             flex: 1.2;
         }
 
+        /* Нагороди */
+        .awards-images-row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .award-icon-img {
+            height: 65px;
+            width: auto;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+            transition: transform 0.3s;
+        }
+        .award-icon-img:hover { transform: scale(1.2) translateY(-5px); }
+
+        .memorial-candle { margin-top: 20px; align-self: center; width: 60px; }
+
         .landing-title {
             font-size: clamp(2rem, 5vw, 3rem);
             text-transform: uppercase;
@@ -297,6 +317,32 @@
 
     <script>
         const heroes = [
+            {
+                 name: "Василь Задорожний",
+                 birth: "11.10.1965",
+                 death: "09.02.2015",
+                 rank: "Солдат",
+                 unit: "1-ша окрема медична рота ім. Пирогова НГУ",
+                 photo: "assets/hero23.svg", 
+                 awardIcons: [
+                   { src: "assets/medal1.svg", label: "Орден", description: "За мужність III ст." },
+                   { src: "assets/medal2.svg", label: "Відзнака", description: "Народний Герой" }
+                 ],
+                 bio: "Львів’янин, активний учасник Революції Гідності та волонтер. З літа 2014-го допомагав війську, а згодом став водієм «швидкої» у складі медичної роти. Загинув 9 лютого 2015 року під час евакуації поранених з-під Дебальцевого (позиція «Хрест»), коли медичний автомобіль потрапив у засідку біля села Логвинове та підірвався на фугасі. Посмертно нагороджений орденом «За мужність» III ступеня, відзнакою «Народний Герой України» та знаком «Медична рота». Похований на Полі почесних поховань Личаківського цвинтаря. Вічна пам’ять рятівнику Героїв!"
+           },
+             {
+                 name: "Андрій Фігурний",
+                 birth: "10.06.1979",
+                 death: "24.11.2015",
+                 rank: "Молодший сержант",
+                 unit: "93-тя ОМБр «Холодний Яр»",
+                 photo: "assets/hero24.svg", 
+                 awardIcons: [
+                     { 
+                        src: "assets/medal3.svg", label: "Орден", description: "Б. Хмельницького III ст." },
+                    ],
+                 bio: "Позивний «Лем». Випускник нашого коледжу (Львівського технікуму електрозв'язку). Пройшов шлях від Революції Гідності до найгарячіших точок АТО: Водяне, Опитне, Піски та оборона Донецького аеропорту (позиція «Мурашник»). Загинув у селищі Старомихайлівка, прикриваючи побратимів у бою з ворожою ДРГ. Завдяки мужності Андрія двох його товаришів вдалося врятувати. Справедливий командир, талановитий зв'язківець та Герой України. Вічна пам'ять!"
+           },
 
             {
                 name: "Михайло Міхеєв",
@@ -316,6 +362,32 @@
                 photo: "assets/hero3.svg", 
                 bio: "Позивний «Тигр». Випускник коледжу (2011–2015 рр.) та Національної академії сухопутних військ. Вихованець ОУМ «Спадщина». Служив у батальйоні «Карпатська Січ» та 93-й бригаді «Холодний Яр». Обіймав посаду помічника начальника полкової розвідки. Загинув 26 серпня 2022 року у протистоянні з ДРГ окупантів. Честь, повага та вічна пам'ять Герою!"                
             },
+            {
+                 name: "Ігор Гадяк",
+                 birth: "16.11.1990",
+                 death: "01.10.2022",
+                 rank: "Старший солдат",
+                 unit: "80-та окрема десантно-штурмова бригада ДШВ",
+                 photo: "assets/hero25.svg", 
+                 awardIcons: [
+                    { src: "assets/medal1.svg", label: "Орден", description: "«За мужність» III ст." },
+                    { src: "assets/medal4.svg", label: "Медаль", description: "За взірцевість II ст." },
+                    { src: "assets/medal5.svg", label: "Відзнака", description: "Учасник АТО" },
+                     ],
+                 bio: "Випускник нашого коледжу. Один із тих, хто тримав щит над Україною протягом 9 років. Розпочав шлях у 2014-му в батальйоні «Львів», згодом став частиною легендарної 80-ї ДШБ. Бойовий медик розвідувального взводу, інструктор та професіонал найвищого рівня. Пройшов найгарячіші точки Сходу. Загинув 1 жовтня 2022 року на Харківщині, рятуючи життя побратимів та до останнього залишаючись вірним присязі. Вічна слава десантнику!"
+           },
+           {
+                 name: "Іван Меркулов",
+                 birth: "30.04.1991",
+                 death: "07.10.2022",
+                 rank: "Солдат",
+                 unit: "128-ма окрема гірсько-штурмова бригада",
+                 photo: "assets/hero26.svg", 
+                 awardIcons: [
+                    { src: "assets/medal1.svg", label: "Орден", description: "За мужність» III ст." }
+                    ],
+                 bio: "Випускник нашого коледжу, технік електрозв'язку. Без вагань пішов боронити Батьківщину у складі легендарної 128-ї бригади. Загинув 7 жовтня 2022 року під час виконання бойового завдання поблизу н.п. Нова Кам’янка на Херсонщині. Іван був воїном світла, який не втікав від свого обов'язку. Добра та вдячна пам'ять про нього назавжди у наших серцях."
+           },
             {
                 name: "Андрій Клуб",
                 birth: "20.08.1990",
@@ -353,6 +425,15 @@
                 photo: "assets/hero5.svg", 
                 bio: "Випускник коледжу (1996–1997 рр.), радіомеханік. Навчався в Академії друкарства, захоплювався історією. Працював менеджером із продажу, останнім часом — у Бельгії. З початком повномасштабного вторгнення повернувся з-за кордону, щоб стати на захист Батьківщини. Служив у 125-й бригаді ТрО. Загинув 27 березня 2023 року під час виконання бойового завдання у протистоянні з ДРГ окупантів. Світла пам’ять Герою!"
             },
+            {
+                 name: "Володимир Савка",
+                 birth: "02.05.1972",
+                 death: "21.04.2023",
+                 rank: "Солдат",
+                 unit: "63-тя окрема механізована бригада",
+                 photo: "assets/hero27.svg",
+                 bio: "Випускник нашого коледжу (1992 р.), технік електрозв'язку. У мирному житті — успішний підприємець, шахіст та мандрівник. З перших днів повномасштабного вторгнення пішов на фронт добровольцем. Загинув під час виконання складного завдання з інженерної розвідки поблизу села Діброва на Луганщині. Людина світлої душі, люблячий батько та дідусь, який віддав життя за майбутнє своєї родини та України."
+           },
             
             {
                 name: "Роман Дзюба",
@@ -425,7 +506,7 @@
                 name: "Юрій Гриців",
                 birth: "12.08.2000",
                 death: "19.09.2024",
-                rank: "Старший солдат",
+                rank: "Старший солда",
                 unit: "в/ч 3057 Національної гвардії України",
                 photo: "assets/hero14.svg", 
                 bio: "Позивний «Тенма». Випускник коледжу. Старший солдат, сапер Національної гвардії України. Загинув 19 вересня 2024 року внаслідок підриву на ворожій міні під час розмінування території поблизу н.п. Неліпівка на Донеччині. Віддав життя, захищаючи мирне небо та свободу України. У Героя залишилися батьки та дві сестри. Назавжди 24. Світла пам’ять!"
@@ -466,6 +547,22 @@
                 photo: "assets/hero18.svg", 
                 bio: "Позивний «Князь». Випускник коледжу. Учасник Революції Гідності та АТО. З перших днів повномасштабного вторгнення боронив Київщину, згодом виконував завдання на Донецькому та Запорізькому напрямках у лавах 44-ї окремої артилерійської бригади. За особисту мужність нагороджений «Золотим хрестом» Головнокомандувача ЗСУ та медаллю «За незламність духу». Загинув 10 травня 2025 року у бою з ворожою ДРГ. Світла пам’ять Герою!"
             },
+            {
+                 name: "Ярослав Чайка",
+                 birth: "26.08.1983",
+                 death: "10.07.2025",
+                 rank: "Зв’язківець / Десантниквання",
+                 unit: "81-ша окрема аеромобільна бригада ДШВ",
+                 photo: "assets/hero28.svg", 
+                 awardIcons: [
+                 { 
+                        src: "assets/medal6.svg", 
+                        label: "Відзнака", 
+                        description: "За участь в АТО" 
+                 }
+                 ],
+                 bio: "Професійний зв’язківець, для якого техніка була покликанням. Керував АТС в «Укртелекомі», працював у прикордонній службі. Учасник АТО з 2015 року. У 2023-му знову став на захист України у лавах елітної 81-ї бригади ДШВ. Боронив країну на найскладніших напрямках: від Донеччини до Луганщини. Відповідальний, справедливий та відданий своїй справі до останнього подиху. Вічна пам'ять Герою!"
+           },
 
             {
                 name: "Назарій-Гліб Нагірняк",
@@ -554,34 +651,89 @@
             }
 
             heroes.forEach((hero, index) => {
-                const zIndex = (heroes.length - index) * 2 - (index === 0 ? 1 : 0);
-                html += `
-                    <div class="page" onclick="handlePageClick(event, this, ${index + 2})" style="z-index: ${zIndex}" data-index="${index}">
-                        <div class="front">
-                            <h2 class="page-title">Біографія</h2>
-                            <div class="bio-text"><p>${hero.bio}</p></div>
+    // Розрахунок z-index для правильного нашарування сторінок
+    const zIndex = (heroes.length - index) * 2 - (index === 0 ? 1 : 0);
+    
+    html += `
+        <div class="page" onclick="handlePageClick(event, this, ${index + 2})" style="z-index: ${zIndex}" data-index="${index}">
+            <div class="front">
+                <div style="display: flex; flex-direction: column; height: 100%;">
+                    
+                    <h2 class="page-title">Біографія</h2>
+                    
+                    <div class="bio-text" style="flex-grow: 1; overflow-y: auto;">
+                        <p>${hero.bio}</p>
+                    </div>
+
+${hero.awardIcons && hero.awardIcons.length > 0 ? `
+    <div class="awards-static-row" style="
+        margin-top: auto; 
+        padding-top: 15px; 
+        border-top: 1px solid rgba(212, 175, 55, 0.3);
+    ">
+        <div style="display: flex; justify-content: center; gap: 25px; flex-wrap: wrap;">
+            ${hero.awardIcons.map(award => `
+                <div class="award-item" style="
+                    display: flex; 
+                    flex-direction: column; 
+                    align-items: center; 
+                    width: 100px; /* ТУТ: Ширина всього блоку нагороди */
+                    text-align: center;
+                ">
+                    <img src="${award.src}" 
+                         alt="${award.label}" 
+                         style="
+                            height: 30px; /* ТУТ: Висота самої медалі */
+                            width: auto; 
+                            object-fit: contain;
+                            margin-bottom: 8px;
+                            transition: transform 0.3s ease;
+                         "
+                         onmouseover="this.style.transform='scale(1.1)'"
+                         onmouseout="this.style.transform='scale(1)'"
+                    >
+                    
+                    <span style="
+                        font-family: sans-serif;
+                        font-size: 9px; 
+                        line-height: 1.2;
+                        color: #444;
+                        text-transform: uppercase;
+                        font-weight: bold;
+                        letter-spacing: 0.3px;
+                    ">
+                        ${award.label}<br>
+                        <span style="color: #0057b7; font-weight: 900;">${award.description}</span>
+                    </span>
+                </div>
+            `).join('')}
+        </div>
+    </div>
+` : ''}
+                </div>
+            </div>
+
+            <div class="back ${index === heroes.length - 1 ? 'cover-back' : ''}">
+                ${index < heroes.length - 1 ? `
+                    <div class="hero-profile">
+                        <div class="hero-photo-frame">
+                            <div class="hero-photo" style="background-image: url('${heroes[index + 1].photo}')"></div>
                         </div>
-                        <div class="back ${index === heroes.length - 1 ? 'cover-back' : ''}">
-                            ${index < heroes.length - 1 ? `
-                                <div class="hero-profile">
-                                    <div class="hero-photo-frame">
-                                        <div class="hero-photo" style="background-image: url('${heroes[index + 1].photo}')"></div>
-                                    </div>
-                                    <div class="hero-name-label">${heroes[index + 1].name}</div>
-                                    <div class="info-group">
-                                        <div class="info-item"><span class="info-label">Дата народження</span><span class="info-value">${heroes[index + 1].birth}</span></div>
-                                        <div class="info-item"><span class="info-label">Дата загибелі</span><span class="info-value">${heroes[index + 1].death}</span></div>
-                                        <div class="info-item"><span class="info-label">Звання</span><span class="info-value">${heroes[index + 1].rank}</span></div>
-                                        <div class="info-item"><span class="info-label">Підрозділ</span><span class="info-value">${heroes[index + 1].unit}</span></div>
-                                    </div>
-                                </div>
-                            ` : `
-                                <img src="assets/end.svg" alt="Задня обкладинка" style="width:100%; height:100%; object-fit: cover; border-radius: 8px;">
-                            `}
+                        <div class="hero-name-label">${heroes[index + 1].name}</div>
+                        <div class="info-group">
+                            <div class="info-item"><span class="info-label">Дата народження</span><span class="info-value">${heroes[index + 1].birth}</span></div>
+                            <div class="info-item"><span class="info-label">Дата загибелі</span><span class="info-value">${heroes[index + 1].death}</span></div>
+                            <div class="info-item"><span class="info-label">Звання</span><span class="info-value">${heroes[index + 1].rank}</span></div>
+                            <div class="info-item"><span class="info-label">Підрозділ</span><span class="info-value">${heroes[index + 1].unit}</span></div>
                         </div>
                     </div>
-                `;
-            });
+                ` : `
+                    <img src="assets/cover.svg" alt="Обкладинка" style="width:100%; height:100%; object-fit: cover; border-radius: 8px 0 0 8px;">
+                `}
+            </div>
+        </div>
+    `;
+});
 
             bookContainer.innerHTML = html;
         }
