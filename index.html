@@ -5,29 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Книга пам'яті Героїв України</title>
     <style>
-        :root {
-            --gold: #d4af37;
-            --accent-blue: #0057b7; 
-            --page-width: 480px;
-            --page-height: 680px;
-            --animation-speed: 1s;
-        }
-
-        * {
+        /* Ізольовані змінні, щоб не конфліктувати з темою або плагінами WP */
+        .itcollege-root {
+            --itc-gold: #d4af37;
+            --itc-blue: #0057b7;
+            --itcollege-page-width: 480px;
+            --itcollege-page-height: 680px;
+            --itcollege-animation-speed: 1s;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
             background: #ffffff;
             font-family: 'Times New Roman', serif;
             overflow-x: hidden;
         }
 
+        .itcollege-root * {
+            box-sizing: inherit;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         /* ===================== ГОЛОВНИЙ ЕКРАН (ЛЕНДІНГ) ===================== */
-        .landing-section {
+        .itcollege-landing-section {
             width: 100%;
             min-height: 90vh;
             display: flex;
@@ -38,7 +35,7 @@
             background: #fdfdfd;
         }
 
-        .landing-container {
+        .itcollege-landing-container {
             max-width: 1100px;
             width: 100%;
             display: flex;
@@ -48,12 +45,12 @@
             z-index: 2;
         }
 
-        .landing-content {
+        .itcollege-landing-content {
             flex: 1.2;
         }
 
         /* Нагороди */
-        .awards-images-row {
+        .itcollege-awards-images-row {
             display: flex;
             justify-content: center;
             gap: 15px;
@@ -62,26 +59,26 @@
             border-top: 1px solid rgba(212, 175, 55, 0.3);
         }
 
-        .award-icon-img {
+        .itcollege-award-icon-img {
             height: 65px;
             width: auto;
             filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
             transition: transform 0.3s;
         }
-        .award-icon-img:hover { transform: scale(1.2) translateY(-5px); }
+        .itcollege-award-icon-img:hover { transform: scale(1.2) translateY(-5px); }
 
-        .memorial-candle { margin-top: 20px; align-self: center; width: 60px; }
+        .itcollege-memorial-candle { margin-top: 20px; align-self: center; width: 60px; }
 
-        .landing-title {
+        .itcollege-landing-title {
             font-size: clamp(2rem, 5vw, 3rem);
             text-transform: uppercase;
             margin-bottom: 20px;
             line-height: 1.1;
             font-weight: 900;
-            color: var(--accent-blue);
+            color: var(--itc-blue);
         }
 
-        .landing-description {
+        .itcollege-landing-description {
             font-size: 1.1rem;
             line-height: 1.6;
             color: #555;
@@ -89,7 +86,7 @@
             max-width: 550px;
         }
 
-        .read-more-btn {
+        .itcollege-read-more-btn {
             display: inline-flex;
             align-items: center;
             padding: 12px 30px;
@@ -104,19 +101,19 @@
             cursor: pointer;
         }
 
-        .read-more-btn:hover {
-            background: var(--accent-blue);
+        .itcollege-read-more-btn:hover {
+            background: var(--itc-blue);
             color: #fff;
-            border-color: var(--accent-blue);
+            border-color: var(--itc-blue);
         }
 
-        .landing-visual {
+        .itcollege-landing-visual {
             flex: 0.8;
             display: flex;
             justify-content: center;
         }
 
-        .landing-book-img {
+        .itcollege-landing-book-img {
             width: 100%;
             max-width: 450px;
             height: auto;
@@ -124,28 +121,9 @@
             filter: drop-shadow(0 10px 20px rgba(0,0,0,0.05));
         }
 
-        .pagination-dots {
-            margin-top: 50px;
-            display: flex;
-            gap: 12px;
-        }
-
-        .dot {
-            width: 10px;
-            height: 10px;
-            background: #e0e0e0;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .dot.active { 
-            background: var(--accent-blue); 
-            box-shadow: 0 0 8px rgba(0, 87, 183, 0.5);
-            transform: scale(1.2);
-        }
 
         /* ===================== СЕКЦІЯ КНИГИ ===================== */
-        .book-section {
+        .itcollege-book-section {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -154,27 +132,30 @@
             padding: 20px 10px 80px 10px;
             background: #fff;
             perspective: 2500px;
+            position: relative;
+            z-index: 10;
         }
 
-        .book-viewport {
+        .itcollege-book-viewport {
             position: relative;
-            width: calc(var(--page-width) * 2);
-            height: var(--page-height);
+            width: calc(var(--itcollege-page-width) * 2);
+            height: var(--itcollege-page-height);
             display: flex;
             transition: transform 0.8s ease;
         }
 
-        .book-viewport.at-start { transform: translateX(-25%); }
-        .book-viewport.at-end { transform: translateX(25%); }
+        .itcollege-book-viewport.itcollege-at-start { transform: translateX(-25%); }
+        .itcollege-book-viewport.itcollege-at-end { transform: translateX(25%); }
 
-        .book {
+        .itcollege-book {
             position: relative;
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
         }
 
-        .page {
+        .itcollege-page {
             position: absolute;
             width: 50%;
             height: 100%;
@@ -182,19 +163,20 @@
             right: 0;
             transform-origin: left;
             transform-style: preserve-3d;
-            transition: transform var(--animation-speed) cubic-bezier(0.645, 0.045, 0.355, 1);
-            cursor: pointer;
+            transition: transform var(--itcollege-animation-speed) cubic-bezier(0.645, 0.045, 0.355, 1);
+            cursor: default;
         }
 
-        .page.flipped { transform: rotateY(-180deg); }
+        .itcollege-page.itcollege-flipped { transform: rotateY(-180deg); }
 
-        .front, .back {
+        .itcollege-front, .itcollege-back {
             position: absolute;
             width: 100%;
             height: 100%;
             top: 0;
             left: 0;
             backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
             background: #fdfcf7;
             padding: 35px;
             border: 1px solid #ddd;
@@ -203,58 +185,70 @@
             box-shadow: inset 0 0 20px rgba(0,0,0,0.02), 5px 0 10px rgba(0,0,0,0.03);
         }
 
-        .back { border-radius: 8px 0 0 8px; transform: rotateY(180deg); }
-        .front { border-radius: 0 8px 8px 0; }
+        .itcollege-back { border-radius: 8px 0 0 8px; transform: rotateY(180deg); }
+        .itcollege-front { border-radius: 0 8px 8px 0; }
 
-        .cover-front { background: #fff; border: 1px solid #eee; padding: 0; }
-        .cover-back { background: #fff; border: 1px solid #eee; padding: 0; }
+        .itcollege-cover-front,
+        .itcollege-cover-back {
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 0;
+            overflow: hidden;
+        }
+        .itcollege-cover-front img,
+        .itcollege-cover-back img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+        }
 
-        .hero-profile { display: flex; flex-direction: column; align-items: center; text-align: center; height: 100%; }
-        .hero-photo-frame {
+        .itcollege-hero-profile { display: flex; flex-direction: column; align-items: center; text-align: center; height: 100%; }
+        .itcollege-hero-photo-frame {
             width: 260px; height: 340px; border: 1px solid #eee; padding: 0; background: #fafafa;
             margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; align-items: center;
             justify-content: center; overflow: hidden; position: relative;
         }
-        .hero-photo { width: 100%; height: 100%; background-size: cover; background-position: center; z-index: 2; }
+        .itcollege-hero-photo { width: 100%; height: 100%; background-size: cover; background-position: center; z-index: 2; }
 
-        .hero-name-label {
+        .itcollege-hero-name-label {
             font-size: 1.3rem; font-weight: 800; color: #000; text-transform: uppercase;
-            margin-bottom: 10px; width: 100%; border-bottom: 2px solid var(--accent-blue);
+            margin-bottom: 10px; width: 100%; border-bottom: 2px solid var(--itc-blue);
             padding-bottom: 10px; letter-spacing: 0.5px;
         }
 
-        .info-group { width: 100%; margin-top: 5px; }
-        .info-item { margin-bottom: 12px; border-bottom: 1px dotted #ccc; padding-bottom: 4px; text-align: left;}
-        .info-label { color: var(--accent-blue); font-weight: bold; font-size: 0.8rem; text-transform: uppercase; display: block; }
-        .info-value { font-size: 1rem; color: #111; }
+        .itcollege-info-group { width: 100%; margin-top: 5px; }
+        .itcollege-info-item { margin-bottom: 12px; border-bottom: 1px dotted #ccc; padding-bottom: 4px; text-align: left;}
+        .itcollege-info-label { color: var(--itc-blue); font-weight: bold; font-size: 0.8rem; text-transform: uppercase; display: block; }
+        .itcollege-info-value { font-size: 1rem; color: #111; }
 
-        .page-title { color: var(--accent-blue); border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-top: 0; text-transform: uppercase; font-size: 1.5rem; }
-        .bio-text { font-size: 0.95rem; line-height: 1.6; text-align: justify; color: #333; }
+        .itcollege-page-title { color: var(--itc-blue); border-bottom: 2px solid var(--itc-gold); padding-bottom: 10px; margin-top: 0; text-transform: uppercase; font-size: 1.5rem; }
+        .itcollege-bio-text { font-size: 0.95rem; line-height: 1.6; text-align: justify; color: #333; }
 
-        .controls { margin-top: 40px; display: flex; gap: 12px; align-items: center; }
-        .nav-btn { padding: 12px 30px; border: none; cursor: pointer; font-weight: bold; color: white; text-transform: uppercase; font-size: 0.8rem; transition: 0.3s; }
-        #prevBtn { background: #c2c2c2; border-radius: 20px 5px 5px 20px; }
-        #nextBtn { background: var(--accent-blue); border-radius: 5px 20px 20px 5px; }
-        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-        .page-counter { font-weight: bold; color: #666; font-family: sans-serif; }
+        .itcollege-controls { margin-top: 40px; display: flex; gap: 12px; align-items: center; }
+        .itcollege-nav-btn { padding: 12px 30px; border: none; cursor: pointer; font-weight: bold; color: white; text-transform: uppercase; font-size: 0.8rem; transition: 0.3s; }
+        #itcollege-prevBtn { background: #c2c2c2; border-radius: 20px 5px 5px 20px; }
+        #itcollege-nextBtn { background: var(--itc-blue); border-radius: 5px 20px 20px 5px; }
+        .itcollege-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .itcollege-page-counter { font-weight: bold; color: #666; font-family: sans-serif !important; }
 
-        .memorial-candle { margin-top: auto; align-self: center; width: 60px; display: block; }
+        .itcollege-memorial-candle { margin-top: auto; align-self: center; width: 60px; display: block; }
 
         /* ===================== МОБІЛЬНА АДАПТАЦІЯ ===================== */
         @media (max-width: 950px) {
-            .landing-container { flex-direction: column; text-align: center; }
-            .landing-visual { order: -1; margin-bottom: 20px; }
+            .itcollege-landing-container { flex-direction: column; text-align: center; }
+            .itcollege-landing-visual { order: -1; margin-bottom: 20px; }
             
-            :root {
-                --page-width: 95vw;
-                --page-height: 75vh;
+            .itcollege-root {
+                --itcollege-page-width: 95vw;
+                --itcollege-page-height: 75vh;
             }
             
-            .book-viewport { width: var(--page-width); transform: none !important; }
-            .page { width: 100%; left: 0; right: 0; transform: none !important; display: none; }
-            .page.mobile-active { display: block; }
+            .itcollege-book-viewport { width: var(--itcollege-page-width); transform: none !important; }
+            .itcollege-page { width: 100%; left: 0; right: 0; transform: none !important; display: none; }
+            .itcollege-page.itcollege-mobile-active { display: block; }
             
-            .front, .back { 
+            .itcollege-front, .itcollege-back { 
                 position: absolute; 
                 width: 100%; 
                 height: 100%; 
@@ -266,57 +260,57 @@
                 padding: 25px; 
             }
 
-            .cover-front, .cover-back {
+            .itcollege-cover-front, .itcollege-cover-back {
                 border: none !important;
                 padding: 0 !important;
                 box-shadow: none !important;
                 background: transparent !important;
             }
 
-            .page.mobile-active .front.mobile-hidden,
-            .page.mobile-active .back.mobile-hidden { display: none; }
-            .hero-photo-frame { width: 180px; height: 240px; }
+            .itcollege-page.itcollege-mobile-active .itcollege-front.itcollege-mobile-hidden,
+            .itcollege-page.itcollege-mobile-active .itcollege-back.itcollege-mobile-hidden { display: none; }
+            .itcollege-hero-photo-frame { width: 180px; height: 240px; }
         }
     </style>
 </head>
 <body>
+    <div class="itcollege-root">
 
-    <section class="landing-section">
-        <div class="landing-container">
-            <div class="landing-content">
-                <h1 class="landing-title">Книга пам'яті <br>Героїв України</h1>
-                <p class="landing-description">
+    <section class="itcollege-landing-section">
+        <div class="itcollege-landing-container">
+            <div class="itcollege-landing-content">
+                <h1 class="itcollege-landing-title">Книга пам'яті <br>Героїв України</h1>
+                <p class="itcollege-landing-description">
                     Це живий літопис мужності та самопожертви. Ми зберігаємо імена тих, хто віддав своє життя за нашу незалежність, щоб кожна історія продовжувала жити в пам'яті народу.
                 </p>
-                <button class="read-more-btn" onclick="document.getElementById('book-start').scrollIntoView({behavior: 'smooth'})">
+                <button class="itcollege-read-more-btn">
                     Відкрити книгу →
                 </button>
             </div>
-            <div class="landing-visual">
-                <img src="assets/book block.svg" alt="Головне фото" class="landing-book-img">
+            <div class="itcollege-landing-visual">
+                <img src="assets/book block.svg" alt="Головне фото" class="itcollege-landing-book-img">
             </div>
         </div>
-        <div class="pagination-dots">
-            <div class="dot active"></div>
-            <div class="dot "></div>
-            <div class="dot"></div>
+    </section>
+
+    <section class="itcollege-book-section" id="itcollege-book-start">
+        <div class="itcollege-book-viewport itcollege-at-start" id="itcollege-viewport">
+            <div class="itcollege-book" id="itcollege-bookContainer"></div>
+        </div>
+
+        <div class="itcollege-controls">
+            <button id="itcollege-prevBtn" class="itcollege-nav-btn">← Назад</button>
+            <span class="itcollege-page-counter" id="itcollege-counter">1 / 1</span>
+            <button id="itcollege-nextBtn" class="itcollege-nav-btn">Вперед →</button>
         </div>
     </section>
 
-    <section class="book-section" id="book-start">
-        <div class="book-viewport at-start" id="viewport">
-            <div class="book" id="bookContainer"></div>
-        </div>
-
-        <div class="controls">
-            <button id="prevBtn" class="nav-btn">← Назад</button>
-            <span class="page-counter" id="counter">1 / 1</span>
-            <button id="nextBtn" class="nav-btn">Вперед →</button>
-        </div>
-    </section>
+    </div>
 
     <script>
-        const heroes = [
+        (function () {
+            /* Дані героїв у локальному блоці IIFE, щоб уникнути глобальних конфліктів зі змінними WP */
+            const itcollegeHeroes = [
             {
                  name: "Василь Задорожний",
                  birth: "11.10.1965",
@@ -487,7 +481,7 @@
                 birth: "04.10.1977",
                 death: "22.06.2024",
                 rank: "Головний сержант",
-                unit: "42-га ОМБр ОК «Захід",
+                unit: "42-га ОМБр ОК «Захід»",
                 photo: "assets/hero10.svg", 
                 bio: "Випускник коледжу. Головний сержант 42-ї окремої механізованої бригади. Загинув 22 червня 2024 року під час виконання бойового завдання біля населеного пункту Стариця на Харківщині. Смертельне поранення отримав внаслідок мінометного обстрілу, до останнього подиху залишаючись вірним військовій присязі та українському народові. Батько нашого студента. Світла пам’ять Герою!"
             },
@@ -506,7 +500,7 @@
                 name: "Юрій Гриців",
                 birth: "12.08.2000",
                 death: "19.09.2024",
-                rank: "Старший солда",
+                rank: "Старший солдат",
                 unit: "в/ч 3057 Національної гвардії України",
                 photo: "assets/hero14.svg", 
                 bio: "Позивний «Тенма». Випускник коледжу. Старший солдат, сапер Національної гвардії України. Загинув 19 вересня 2024 року внаслідок підриву на ворожій міні під час розмінування території поблизу н.п. Неліпівка на Донеччині. Віддав життя, захищаючи мирне небо та свободу України. У Героя залишилися батьки та дві сестри. Назавжди 24. Світла пам’ять!"
@@ -516,7 +510,7 @@
                 birth: "17.08.1989",
                 death: "18.03.2025",
                 rank: "Солдат",
-                unit: "59-та ОШБр «Степові Хижаки",
+                unit: "59-та ОШБр «Степові Хижаки»",
                 photo: "assets/hero15.svg", 
                 bio: "Випускник коледжу. Після навчання працював у сфері монтажних робіт. З початком повномасштабного вторгнення став на захист Батьківщини. Боронив територіальну цілісність України на Покровському напрямку у лавах 59-ї окремої штурмової бригади безпілотних систем «Степові Хижаки» імені Якова Гандзюка. Загинув 18 березня 2025 року в боях із російським агресором. Світла пам’ять Герою!"
             },
@@ -560,7 +554,7 @@
                  name: "Ярослав Чайка",
                  birth: "26.08.1983",
                  death: "10.07.2025",
-                 rank: "Зв’язківець / Десантниквання",
+                 rank: "Зв’язківець / Десантник",
                  unit: "81-ша окрема аеромобільна бригада ДШВ",
                  photo: "assets/hero28.svg", 
                  awardIcons: [
@@ -611,263 +605,281 @@
           //  }
         ];
 
-        const bookContainer = document.getElementById('bookContainer');
-        const viewport = document.getElementById('viewport');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const counter = document.getElementById('counter');
+            let itcollegeBookContainer = null;
+            let itcollegeViewport = null;
+            let itcollegePrevBtn = null;
+            let itcollegeNextBtn = null;
+            let itcollegeCounter = null;
+            let itcollegeReadMoreBtn = null;
 
-        function initBook() {
-            let html = `
-                <div class="page" onclick="handlePageClick(event, this, 0)" style="z-index: ${heroes.length * 2 + 10}">
-                    <div class="front cover-front">
-                        <img src="assets/cover.svg" alt="Обкладинка" style="width:100%; height:100%; object-fit: cover; border-radius: 8px;">
-                    </div>
-                    <div class="back">
-                        <h2 class="page-title">Передмова</h2>
-                        <p class="bio-text">Ця книга — живий літопис мужності. Вона зберігає імена тих, хто став щитом для України. Кожна сторінка — це ціле життя, віддане за наш мир і свободу. Ми пам'ятаємо кожного.</p>
-                        <img src="assets/candle.svg" class="memorial-candle" onerror="this.style.display='none'">
-                    </div>
-                </div>
-            `;
+            let itcollegePages = [];
+            let itcollegeCurrentLoc = 0;
+            let itcollegeTotalPages = 0;
+            let itcollegeMobileSubPage = 0;
 
-            if (heroes.length > 0) {
-                const firstHero = heroes[0];
-                const zIndex = heroes.length * 2;
-                html += `
-                    <div class="page" onclick="handlePageClick(event, this, 1)" style="z-index: ${zIndex}">
-                        <div class="front">
-                            <div style="height:100%; display:flex; align-items:center; justify-content:center; padding: 40px; font-style: italic; color: #555; text-align: center;">
-                                "Герої не вмирають, доки ми про них пам'ятаємо."
-                            </div>
+            function isMobile() {
+                return document.documentElement.clientWidth <= 950;
+            }
+
+            function escapeHTML(value) {
+                return String(value)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
+            }
+
+            function safeBio(value) {
+                // Дозволяємо тільки <br> у біографіях, решту спецсимволів екранізуємо
+                return escapeHTML(value)
+                    .replace(/&lt;br\s*\/?>/gi, '<br>')
+                    .replace(/&lt;br&gt;/gi, '<br>');
+            }
+
+            function safeUrl(value) {
+                return encodeURI(String(value));
+            }
+
+            function initBook() {
+                if (!itcollegeBookContainer) return;
+
+                let html = `
+                    <div class="itcollege-page" style="z-index: ${itcollegeHeroes.length * 2 + 10}">
+                        <div class="itcollege-front itcollege-cover-front">
+                            <img src="assets/cover.svg" alt="Обкладинка" style="width:100%; height:100%; object-fit: cover; border-radius: 8px;">
                         </div>
-                        <div class="back">
-                            <div class="hero-profile">
-                                <div class="hero-photo-frame">
-                                    <div class="hero-photo" style="background-image: url('${firstHero.photo}')"></div>
-                                </div>
-                                <div class="hero-name-label">${firstHero.name}</div>
-                                <div class="info-group">
-                                    <div class="info-item"><span class="info-label">Дата народження</span><span class="info-value">${firstHero.birth}</span></div>
-                                    <div class="info-item"><span class="info-label">Дата загибелі</span><span class="info-value">${firstHero.death}</span></div>
-                                    <div class="info-item"><span class="info-label">Звання</span><span class="info-value">${firstHero.rank}</span></div>
-                                    <div class="info-item"><span class="info-label">Підрозділ</span><span class="info-value">${firstHero.unit}</span></div>
-                                </div>
-                            </div>
+                        <div class="itcollege-back">
+                            <h2 class="itcollege-page-title">Передмова</h2>
+                            <p class="itcollege-bio-text">Ця книга — живий літопис мужності. Вона зберігає імена тих, хто став щитом для України. Кожна сторінка — це ціле життя, віддане за наш мир і свободу. Ми пам'ятаємо кожного.</p>
+                            <img src="assets/candle.svg" class="itcollege-memorial-candle" alt="Свічка">
                         </div>
                     </div>
                 `;
-            }
 
-            heroes.forEach((hero, index) => {
-    // Розрахунок z-index для правильного нашарування сторінок
-    const zIndex = (heroes.length - index) * 2 - (index === 0 ? 1 : 0);
-    
-    html += `
-        <div class="page" onclick="handlePageClick(event, this, ${index + 2})" style="z-index: ${zIndex}" data-index="${index}">
-            <div class="front">
-                <div style="display: flex; flex-direction: column; height: 100%;">
-                    
-                    <h2 class="page-title">Біографія</h2>
-                    
-                    <div class="bio-text" style="flex-grow: 1; overflow-y: auto;">
-                        <p>${hero.bio}</p>
-                    </div>
-
-${hero.awardIcons && hero.awardIcons.length > 0 ? `
-    <div class="awards-static-row" style="
-        margin-top: auto; 
-        padding-top: 15px; 
-        border-top: 1px solid rgba(212, 175, 55, 0.3);
-    ">
-        <div style="display: flex; justify-content: center; gap: 25px; flex-wrap: wrap;">
-            ${hero.awardIcons.map(award => `
-                <div class="award-item" style="
-                    display: flex; 
-                    flex-direction: column; 
-                    align-items: center; 
-                    width: 100px; /* ТУТ: Ширина всього блоку нагороди */
-                    text-align: center;
-                ">
-                    <img src="${award.src}" 
-                         alt="${award.label}" 
-                         style="
-                            height: 30px; /* ТУТ: Висота самої медалі */
-                            width: auto; 
-                            object-fit: contain;
-                            margin-bottom: 8px;
-                            transition: transform 0.3s ease;
-                         "
-                         onmouseover="this.style.transform='scale(1.1)'"
-                         onmouseout="this.style.transform='scale(1)'"
-                    >
-                    
-                    <span style="
-                        font-family: sans-serif;
-                        font-size: 9px; 
-                        line-height: 1.2;
-                        color: #444;
-                        text-transform: uppercase;
-                        font-weight: bold;
-                        letter-spacing: 0.3px;
-                    ">
-                        ${award.label}<br>
-                        <span style="color: #0057b7; font-weight: 900;">${award.description}</span>
-                    </span>
-                </div>
-            `).join('')}
-        </div>
-    </div>
-` : ''}
-                </div>
-            </div>
-
-            <div class="back ${index === heroes.length - 1 ? 'cover-back' : ''}">
-                ${index < heroes.length - 1 ? `
-                    <div class="hero-profile">
-                        <div class="hero-photo-frame">
-                            <div class="hero-photo" style="background-image: url('${heroes[index + 1].photo}')"></div>
+                if (itcollegeHeroes.length > 0) {
+                    const firstHero = itcollegeHeroes[0];
+                    const zIndex = itcollegeHeroes.length * 2;
+                    html += `
+                        <div class="itcollege-page" style="z-index: ${zIndex}">
+                            <div class="itcollege-front">
+                                <div style="height:100%; display:flex; align-items:center; justify-content:center; padding: 40px; font-style: italic; color: #555; text-align: center;">
+                                    \"Герої не вмирають, доки ми про них пам'ятаємо.\"
+                                </div>
+                            </div>
+                            <div class="itcollege-back">
+                                <div class="itcollege-hero-profile">
+                                    <div class="itcollege-hero-photo-frame">
+                                        <div class="itcollege-hero-photo" style="background-image: url('${safeUrl(firstHero.photo)}')"></div>
+                                    </div>
+                                    <div class="itcollege-hero-name-label">${escapeHTML(firstHero.name)}</div>
+                                    <div class="itcollege-info-group">
+                                        <div class="itcollege-info-item"><span class="itcollege-info-label">Дата народження</span><span class="itcollege-info-value">${escapeHTML(firstHero.birth)}</span></div>
+                                        <div class="itcollege-info-item"><span class="itcollege-info-label">Дата загибелі</span><span class="itcollege-info-value">${escapeHTML(firstHero.death)}</span></div>
+                                        <div class="itcollege-info-item"><span class="itcollege-info-label">Звання</span><span class="itcollege-info-value">${escapeHTML(firstHero.rank)}</span></div>
+                                        <div class="itcollege-info-item"><span class="itcollege-info-label">Підрозділ</span><span class="itcollege-info-value">${escapeHTML(firstHero.unit)}</span></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="hero-name-label">${heroes[index + 1].name}</div>
-                        <div class="info-group">
-                            <div class="info-item"><span class="info-label">Дата народження</span><span class="info-value">${heroes[index + 1].birth}</span></div>
-                            <div class="info-item"><span class="info-label">Дата загибелі</span><span class="info-value">${heroes[index + 1].death}</span></div>
-                            <div class="info-item"><span class="info-label">Звання</span><span class="info-value">${heroes[index + 1].rank}</span></div>
-                            <div class="info-item"><span class="info-label">Підрозділ</span><span class="info-value">${heroes[index + 1].unit}</span></div>
+                    `;
+                }
+
+                itcollegeHeroes.forEach((hero, index) => {
+                    const zIndex = (itcollegeHeroes.length - index) * 2 - (index === 0 ? 1 : 0);
+                    html += `
+                        <div class="itcollege-page" style="z-index: ${zIndex}">
+                            <div class="itcollege-front">
+                                <div style="display: flex; flex-direction: column; height: 100%;">
+                                    <h2 class="itcollege-page-title">Біографія</h2>
+                                    <div class="itcollege-bio-text" style="flex-grow: 1; overflow-y: auto;">
+                                        <p>${safeBio(hero.bio)}</p>
+                                    </div>
+                                    ${hero.awardIcons && hero.awardIcons.length > 0 ? `
+                                        <div class="itcollege-awards-static-row" style="margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(212, 175, 55, 0.3);">
+                                            <div style="display: flex; justify-content: center; gap: 25px; flex-wrap: wrap;">
+                                                ${hero.awardIcons.map(award => `
+                                                    <div class="itcollege-award-item" style="display: flex; flex-direction: column; align-items: center; width: 100px; text-align: center;">
+                                                        <img src="${safeUrl(award.src)}" alt="${escapeHTML(award.label)}" style="height: 30px; width: auto; object-fit: contain; margin-bottom: 8px; transition: transform 0.3s ease;">
+                                                        <span style="font-family: sans-serif; font-size: 9px; line-height: 1.2; color: #444; text-transform: uppercase; font-weight: bold; letter-spacing: 0.3px;">
+                                                            ${escapeHTML(award.label)}<br>
+                                                            <span style="color: #0057b7; font-weight: 900;">${escapeHTML(award.description)}</span>
+                                                        </span>
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                            <div class="itcollege-back ${index === itcollegeHeroes.length - 1 ? 'itcollege-cover-back' : ''}">
+                                ${index < itcollegeHeroes.length - 1 ? `
+                                    <div class="itcollege-hero-profile">
+                                        <div class="itcollege-hero-photo-frame">
+                                            <div class="itcollege-hero-photo" style="background-image: url('${safeUrl(itcollegeHeroes[index + 1].photo)}')"></div>
+                                        </div>
+                                        <div class="itcollege-hero-name-label">${escapeHTML(itcollegeHeroes[index + 1].name)}</div>
+                                        <div class="itcollege-info-group">
+                                            <div class="itcollege-info-item"><span class="itcollege-info-label">Дата народження</span><span class="itcollege-info-value">${escapeHTML(itcollegeHeroes[index + 1].birth)}</span></div>
+                                            <div class="itcollege-info-item"><span class="itcollege-info-label">Дата загибелі</span><span class="itcollege-info-value">${escapeHTML(itcollegeHeroes[index + 1].death)}</span></div>
+                                            <div class="itcollege-info-item"><span class="itcollege-info-label">Звання</span><span class="itcollege-info-value">${escapeHTML(itcollegeHeroes[index + 1].rank)}</span></div>
+                                            <div class="itcollege-info-item"><span class="itcollege-info-label">Підрозділ</span><span class="itcollege-info-value">${escapeHTML(itcollegeHeroes[index + 1].unit)}</span></div>
+                                        </div>
+                                    </div>
+                                ` : `
+                                    <img src="assets/cover.svg" alt="Обкладинка" style="width:100%; height:100%; object-fit: cover; border-radius: 8px 0 0 8px;">
+                                `}
+                            </div>
                         </div>
-                    </div>
-                ` : `
-                    <img src="assets/cover.svg" alt="Обкладинка" style="width:100%; height:100%; object-fit: cover; border-radius: 8px 0 0 8px;">
-                `}
-            </div>
-        </div>
-    `;
-});
-
-            bookContainer.innerHTML = html;
-        }
-
-        // Функція обробки кліку
-        window.handlePageClick = function(event, pageElement, pageIdx) {
-            const rect = pageElement.getBoundingClientRect();
-            const clickX = event.clientX - rect.left;
-            const midPoint = rect.width / 2;
-
-            if (isMobile()) {
-                // На мобільних: ліворуч - назад, праворуч - вперед
-                if (clickX < midPoint) {
-                    goPrev();
-                } else {
-                    goNext();
-                }
-            } else {
-                // На ПК: якщо сторінка перегорнута - назад, якщо ні - вперед
-                if (pageElement.classList.contains('flipped')) {
-                    goPrev();
-                } else {
-                    goNext();
-                }
-            }
-        };
-
-        initBook();
-
-        const pages = document.querySelectorAll('.page');
-        let currentLoc = 0;
-        let totalPages = pages.length;
-        let mobileSubPage = 0;
-
-        function isMobile() { return window.innerWidth <= 950; }
-
-        function goNext() {
-            if (isMobile()) {
-                if (mobileSubPage === 0) mobileSubPage = 1;
-                else if (currentLoc < totalPages - 1) { currentLoc++; mobileSubPage = 0; }
-            } else {
-                if (currentLoc < totalPages) { pages[currentLoc].classList.add('flipped'); currentLoc++; }
-            }
-            updateUI();
-        }
-
-        function goPrev() {
-            if (isMobile()) {
-                if (mobileSubPage === 1) mobileSubPage = 0;
-                else if (currentLoc > 0) { currentLoc--; mobileSubPage = 1; }
-            } else {
-                if (currentLoc > 0) { currentLoc--; pages[currentLoc].classList.remove('flipped'); }
-            }
-            updateUI();
-        }
-
-        function updateUI() {
-            const mobile = isMobile();
-            if (!mobile) {
-                pages.forEach(page => {
-                    page.classList.remove('mobile-active');
-                    page.style.display = '';
-                    const front = page.querySelector('.front');
-                    const back = page.querySelector('.back');
-                    if (front) front.classList.remove('mobile-hidden');
-                    if (back) back.classList.remove('mobile-hidden');
+                    `;
                 });
-                viewport.classList.remove('at-start', 'at-end');
-                if (currentLoc === 0) viewport.classList.add('at-start');
-                else if (currentLoc === totalPages) viewport.classList.add('at-end');
-                prevBtn.disabled = (currentLoc === 0);
-                nextBtn.disabled = (currentLoc === totalPages);
-                counter.innerText = `${Math.ceil((currentLoc + 1) / 2)} / ${Math.ceil((totalPages + 1) / 2)}`;
-                pages.forEach((page, index) => {
-                    page.style.zIndex = (index < currentLoc) ? index + 1 : totalPages - index + 1;
-                });
-            } else {
-                pages.forEach(page => page.classList.remove('mobile-active'));
-                const currentPage = pages[currentLoc];
-                if (currentPage) {
-                    currentPage.classList.add('mobile-active');
-                    const front = currentPage.querySelector('.front');
-                    const back = currentPage.querySelector('.back');
-                    if (mobileSubPage === 0) {
-                        if (front) front.classList.remove('mobile-hidden');
-                        if (back) back.classList.add('mobile-hidden');
-                    } else {
-                        if (front) front.classList.add('mobile-hidden');
-                        if (back) back.classList.remove('mobile-hidden');
+
+                itcollegeBookContainer.innerHTML = html;
+                itcollegePages = document.querySelectorAll('.itcollege-page');
+                itcollegeTotalPages = itcollegePages.length;
+            }
+
+            function goNext() {
+                if (isMobile()) {
+                    if (itcollegeMobileSubPage === 0) {
+                        itcollegeMobileSubPage = 1;
+                    } else if (itcollegeCurrentLoc < itcollegeTotalPages - 1) {
+                        itcollegeCurrentLoc++;
+                        itcollegeMobileSubPage = 0;
+                    }
+                } else {
+                    if (itcollegeCurrentLoc < itcollegeTotalPages) {
+                        itcollegePages[itcollegeCurrentLoc].classList.add('itcollege-flipped');
+                        itcollegeCurrentLoc++;
                     }
                 }
-                counter.innerText = `${currentLoc * 2 + mobileSubPage + 1} / ${totalPages * 2}`;
-                prevBtn.disabled = (currentLoc === 0 && mobileSubPage === 0);
-                nextBtn.disabled = (currentLoc === totalPages - 1 && mobileSubPage === 1);
+                updateUI();
             }
-        }
 
-        nextBtn.onclick = (e) => { e.stopPropagation(); goNext(); };
-        prevBtn.onclick = (e) => { e.stopPropagation(); goPrev(); };
-        window.onresize = updateUI;
+            function goPrev() {
+                if (isMobile()) {
+                    if (itcollegeMobileSubPage === 1) {
+                        itcollegeMobileSubPage = 0;
+                    } else if (itcollegeCurrentLoc > 0) {
+                        itcollegeCurrentLoc--;
+                        itcollegeMobileSubPage = 1;
+                    }
+                } else {
+                    if (itcollegeCurrentLoc > 0) {
+                        itcollegeCurrentLoc--;
+                        itcollegePages[itcollegeCurrentLoc].classList.remove('itcollege-flipped');
+                    }
+                }
+                updateUI();
+            }
 
-        const dots = document.querySelectorAll('.dot');
-        const sections = [
-            document.querySelector('.landing-section'), 
-            document.querySelector('.book-section')
-        ];
+            function updateUI() {
+                const mobile = isMobile();
+                if (!itcollegeViewport || !itcollegeCounter || !itcollegePrevBtn || !itcollegeNextBtn) {
+                    return;
+                }
 
-        window.addEventListener('scroll', () => {
-            let currentSectionIndex = 0;
-            const scrollPos = window.scrollY + window.innerHeight / 2;
-            sections.forEach((section, idx) => {
-                if (section && scrollPos >= section.offsetTop) currentSectionIndex = idx;
-            });
-            dots.forEach((dot, idx) => {
-                dot.classList.toggle('active', idx === currentSectionIndex);
-            });
-        });
+                if (!mobile) {
+                    itcollegePages.forEach(page => {
+                        page.classList.remove('itcollege-mobile-active');
+                        page.style.display = '';
+                        const front = page.querySelector('.itcollege-front');
+                        const back = page.querySelector('.itcollege-back');
+                        if (front) front.classList.remove('itcollege-mobile-hidden');
+                        if (back) back.classList.remove('itcollege-mobile-hidden');
+                    });
+                    itcollegeViewport.classList.remove('itcollege-at-start', 'itcollege-at-end');
+                    if (itcollegeCurrentLoc === 0) itcollegeViewport.classList.add('itcollege-at-start');
+                    else if (itcollegeCurrentLoc >= itcollegeTotalPages) itcollegeViewport.classList.add('itcollege-at-end');
+                    itcollegePrevBtn.disabled = (itcollegeCurrentLoc === 0);
+                    itcollegeNextBtn.disabled = (itcollegeCurrentLoc >= itcollegeTotalPages);
+                    itcollegeCounter.textContent = `${itcollegeCurrentLoc + 1} / ${itcollegeTotalPages}`;
+                    itcollegePages.forEach((page, index) => {
+                        page.style.zIndex = (index < itcollegeCurrentLoc) ? index + 1 : itcollegeTotalPages - index + 1;
+                    });
+                } else {
+                    itcollegePages.forEach(page => page.classList.remove('itcollege-mobile-active'));
+                    const currentPage = itcollegePages[itcollegeCurrentLoc];
+                    if (currentPage) {
+                        currentPage.classList.add('itcollege-mobile-active');
+                        const front = currentPage.querySelector('.itcollege-front');
+                        const back = currentPage.querySelector('.itcollege-back');
+                        if (itcollegeMobileSubPage === 0) {
+                            if (front) front.classList.remove('itcollege-mobile-hidden');
+                            if (back) back.classList.add('itcollege-mobile-hidden');
+                        } else {
+                            if (front) front.classList.add('itcollege-mobile-hidden');
+                            if (back) back.classList.remove('itcollege-mobile-hidden');
+                        }
+                    }
+                    itcollegeCounter.textContent = `${itcollegeCurrentLoc * 2 + itcollegeMobileSubPage + 1} / ${itcollegeTotalPages * 2}`;
+                    itcollegePrevBtn.disabled = (itcollegeCurrentLoc === 0 && itcollegeMobileSubPage === 0);
+                    itcollegeNextBtn.disabled = (itcollegeCurrentLoc === itcollegeTotalPages - 1 && itcollegeMobileSubPage === 1);
+                }
+            }
 
-        dots.forEach((dot, idx) => {
-            dot.addEventListener('click', () => {
-                if (sections[idx]) sections[idx].scrollIntoView({ behavior: 'smooth' });
-            });
-        });
+            function init() {
+                itcollegeBookContainer = document.getElementById('itcollege-bookContainer');
+                itcollegeViewport = document.getElementById('itcollege-viewport');
+                itcollegePrevBtn = document.getElementById('itcollege-prevBtn');
+                itcollegeNextBtn = document.getElementById('itcollege-nextBtn');
+                itcollegeCounter = document.getElementById('itcollege-counter');
+                itcollegeReadMoreBtn = document.querySelector('.itcollege-read-more-btn');
 
-        updateUI();
+                initBook();
+                updateUI();
+
+                if (itcollegePrevBtn) {
+                    itcollegePrevBtn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        goPrev();
+                    });
+                }
+
+                if (itcollegeNextBtn) {
+                    itcollegeNextBtn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        goNext();
+                    });
+                }
+
+                if (itcollegeReadMoreBtn) {
+                    itcollegeReadMoreBtn.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const target = document.getElementById('itcollege-book-start');
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    });
+                }
+
+                if (itcollegeBookContainer && !isMobile()) {
+                    itcollegeBookContainer.addEventListener('click', function (e) {
+                        const rect = itcollegeBookContainer.getBoundingClientRect();
+                        const clickX = e.clientX - rect.left;
+                        if (clickX > rect.width / 2) {
+                            goNext();
+                        } else {
+                            goPrev();
+                        }
+                    });
+                }
+
+                const itcollegeRoot = document.querySelector('.itcollege-root');
+                if (itcollegeRoot && typeof ResizeObserver !== 'undefined') {
+                    const resizeObserver = new ResizeObserver(updateUI);
+                    resizeObserver.observe(itcollegeRoot);
+                }
+            }
+
+            // Якщо WordPress вставляє цей фрагмент після завантаження сторінки,
+            // DOMContentLoaded вже відбувся, тому виконуємо init() негайно.
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
     </script>
 </body>
 </html>
