@@ -819,6 +819,7 @@
             }
 
             function init() {
+                // Зв'язати елементи DOM з внутрішніми змінними стану
                 itcollegeBookContainer = document.getElementById('itcollege-bookContainer');
                 itcollegeViewport = document.getElementById('itcollege-viewport');
                 itcollegePrevBtn = document.getElementById('itcollege-prevBtn');
@@ -826,9 +827,14 @@
                 itcollegeCounter = document.getElementById('itcollege-counter');
                 itcollegeReadMoreBtn = document.querySelector('.itcollege-read-more-btn');
 
+                // Початкове значення для swipe-логіки тільки в межах init()
+                let itcollegeTouchStartX = 0;
+
+                // Згенерувати сторінки книги та відобразити початковий стан
                 initBook();
                 updateUI();
 
+                // Кнопка Назад
                 if (itcollegePrevBtn) {
                     itcollegePrevBtn.addEventListener('click', function (e) {
                         e.preventDefault();
@@ -836,6 +842,7 @@
                     });
                 }
 
+                // Кнопка Вперед
                 if (itcollegeNextBtn) {
                     itcollegeNextBtn.addEventListener('click', function (e) {
                         e.preventDefault();
@@ -843,6 +850,7 @@
                     });
                 }
 
+                // Кнопка «Відкрити книгу» на лендингу
                 if (itcollegeReadMoreBtn) {
                     itcollegeReadMoreBtn.addEventListener('click', function (e) {
                         e.preventDefault();
@@ -853,6 +861,7 @@
                     });
                 }
 
+                // На десктопі можна клікнути по контейнеру книги для навігації
                 if (itcollegeBookContainer && !isMobile()) {
                     itcollegeBookContainer.addEventListener('click', function (e) {
                         const rect = itcollegeBookContainer.getBoundingClientRect();
@@ -865,10 +874,33 @@
                     });
                 }
 
+                // Оновлювати інтерфейс під час зміни розміру кореневого контейнера
                 const itcollegeRoot = document.querySelector('.itcollege-root');
                 if (itcollegeRoot && typeof ResizeObserver !== 'undefined') {
                     const resizeObserver = new ResizeObserver(updateUI);
                     resizeObserver.observe(itcollegeRoot);
+                }
+
+                // Додати свайп-навігацію тільки для мобільних пристроїв
+                if (itcollegeBookContainer) {
+                    itcollegeBookContainer.addEventListener('touchstart', function (e) {
+                        if (!isMobile()) return;
+                        if (e.touches && e.touches[0]) {
+                            itcollegeTouchStartX = e.touches[0].clientX;
+                        }
+                    }, { passive: true });
+
+                    itcollegeBookContainer.addEventListener('touchend', function (e) {
+                        if (!isMobile()) return;
+                        if (e.changedTouches && e.changedTouches[0]) {
+                            const diffX = e.changedTouches[0].clientX - itcollegeTouchStartX;
+                            if (diffX < -50) {
+                                goNext();
+                            } else if (diffX > 50) {
+                                goPrev();
+                            }
+                        }
+                    });
                 }
             }
 
