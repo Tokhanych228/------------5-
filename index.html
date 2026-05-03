@@ -861,15 +861,27 @@
                     });
                 }
 
-                // На десктопі можна клікнути по контейнеру книги для навігації
-                if (itcollegeBookContainer && !isMobile()) {
+                // Клік по контейнеру книги працює на будь-якому пристрої
+                if (itcollegeBookContainer) {
                     itcollegeBookContainer.addEventListener('click', function (e) {
-                        const rect = itcollegeBookContainer.getBoundingClientRect();
-                        const clickX = e.clientX - rect.left;
-                        if (clickX > rect.width / 2) {
-                            goNext();
+                        if (isMobile()) {
+                            // На мобілі: тап по правій половині = вперед, лівій = назад
+                            const rect = itcollegeBookContainer.getBoundingClientRect();
+                            const tapX = e.clientX - rect.left;
+                            if (tapX > rect.width / 2) {
+                                goNext();
+                            } else {
+                                goPrev();
+                            }
                         } else {
-                            goPrev();
+                            // На десктопі: та сама логіка
+                            const rect = itcollegeBookContainer.getBoundingClientRect();
+                            const clickX = e.clientX - rect.left;
+                            if (clickX > rect.width / 2) {
+                                goNext();
+                            } else {
+                                goPrev();
+                            }
                         }
                     });
                 }
